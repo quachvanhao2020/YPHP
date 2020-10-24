@@ -1,7 +1,11 @@
 <?php
 namespace YPHP;
+use YPHP\EntityFertilityEnum as EntityStatus;
+use YPHP\Storage\EntityStorage;
+
 class EntityFertility extends Entity{
     const NAME = "name";
+    const STATUS = "status";
     const PARENT = "parent";
     const CHILDS = "childrens";
     const DATECREATED = "dateCreated";
@@ -13,6 +17,13 @@ class EntityFertility extends Entity{
      * @var string
      */
     protected $name;
+
+    /**
+     * 
+     *
+     * @var EntityStatus
+     */
+    protected $status;
     /**
      * 
      *
@@ -28,7 +39,7 @@ class EntityFertility extends Entity{
     /**
      * 
      *
-     * @var Entity[]
+     * @var EntityStorage
      */
     protected $childrens;
 
@@ -41,6 +52,8 @@ class EntityFertility extends Entity{
 
     public function __toArray(){
         return array_merge(parent::__toArray(),[
+            self::NAME => $this->getName(),
+            self::STATUS => $this->getStatus(),
             self::CHILDS => $this->getChildrens(),
             self::PARENT => $this->getParent(),
             self::REF => $this->getRef(),
@@ -51,7 +64,7 @@ class EntityFertility extends Entity{
     /**
      * Get the value of childrens
      *
-     * @return  Entity[]
+     * @return  EntityStorage
      */ 
     public function getChildrens()
     {
@@ -61,12 +74,13 @@ class EntityFertility extends Entity{
     /**
      * Set the value of childrens
      *
-     * @param  Entity[]  $childrens
+     * @param  EntityStorage  $childrens
      *
      * @return  self
      */ 
-    public function setChildrens($childrens)
+    public function setChildrens(EntityStorage $childrens = null)
     {
+        if($childrens == null) $childrens = new EntityStorage();
         $this->childrens = $childrens;
         return $this;
     }
@@ -88,7 +102,7 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setParent(Entity $parent)
+    public function setParent(Entity $parent = null)
     {
         $this->parent = $parent;
 
@@ -112,7 +126,7 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setRef(string $ref)
+    public function setRef(string $ref = null)
     {
         $this->ref = $ref;
 
@@ -136,7 +150,7 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setDateCreated(int $dateCreated)
+    public function setDateCreated(int $dateCreated = null)
     {
         $this->dateCreated = $dateCreated;
 
@@ -160,10 +174,34 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setName(string $name)
+    public function setName(string $name = null)
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     *
+     * @return  string
+     */ 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @param  string  $status
+     *
+     * @return  self
+     */ 
+    public function setStatus(string $status = null)
+    {
+        if(!EntityStatus::isValidValue($status)) $status = EntityStatus::VIRUS;
+        $this->status = $status;
         return $this;
     }
 }

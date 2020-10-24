@@ -58,8 +58,18 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
         return $storage;
     }
 
+    public function indexing(){
+        foreach ($this->storage as $key => $value) {
+            if($value instanceof Entity){
+                $this->storage[$value->getId()] = $value;
+                unset($this->storage[$key]);
+            }
+        }
+        return $this;
+    }
+
     public function merge(self $storage){
-       return $this->setStorage(array_merge($storage->getStorage(),$this->getStorage()));
+       return $this->setStorage(array_merge_recursive($storage->getStorage(),$this->getStorage()));
     }
 
     public function clear(){
