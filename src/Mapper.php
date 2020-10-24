@@ -26,7 +26,6 @@ class Mapper extends JsonMapper{
     protected function createInstance(
         $class, $useParameter = false, $jvalue = null
     ) {
-        var_dump($class,$useParameter,$jvalue);
         if ($useParameter) {
             return new $class($jvalue);
         } else {
