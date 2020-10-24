@@ -100,6 +100,10 @@ class Entity implements SerializableInterface{
         ];
     }
 
+    public function jsonSerialize() {
+        return $this->__toArray();
+    }
+
     public function __arrayTo(array $array)
     {
         $this->setId($array[self::ID]);

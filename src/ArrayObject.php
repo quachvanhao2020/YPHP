@@ -10,8 +10,21 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
      */
     protected $storage = [];
 
+    public function __toString()
+    {
+        return \json_encode($this->__toArray());
+    }
+
+    public function __toStd(){
+        return (object)$this->__toArray();
+    }
+    
     public function __toArray() {
         return $this->getStorage();
+    }
+
+    public function jsonSerialize() {
+        return $this->__toArray();
     }
 
     /**
