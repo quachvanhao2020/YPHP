@@ -9,6 +9,11 @@ class Image extends Entity {
     const ALT = "alt";
     const WIDTH = "width";
     const HEIGHT = "height";
+    const THUMB = "thumb";
+    /**
+     * @var Image
+     */
+    protected $thumb;
 
     public function __toArray() {
         return array_merge(parent::__toArray(),[
@@ -16,6 +21,7 @@ class Image extends Entity {
             self::ALT => $this->getAlt(),
             self::WIDTH => $this->getWidth(),
             self::HEIGHT => $this->getHeight(),
+            self::THUMB => $this->getThumb(),
         ]);
     }
 
@@ -143,6 +149,30 @@ class Image extends Entity {
         $height = $height ?: 0;
 
         $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of thumb
+     *
+     * @return  Image
+     */ 
+    public function getThumb()
+    {
+        return $this->thumb;
+    }
+
+    /**
+     * Set the value of thumb
+     *
+     * @param  Image  $thumb
+     *
+     * @return  self
+     */ 
+    public function setThumb(Image $thumb)
+    {
+        $this->thumb = $thumb;
 
         return $this;
     }
