@@ -110,4 +110,7 @@ class Entity implements SerializableInterface{
         $this->setClass($array[self::__CLASS]);
     }
 
+    public function save(){}
+    public function destroy(){}
+
 }

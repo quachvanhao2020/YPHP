@@ -1,9 +1,9 @@
 <?php
 namespace YPHP;
 
-use Psr\Container\ContainerInterface;
+use YPHP\ContainerFactoryInterface;
 
-class EntityFactory implements ContainerInterface{
+class EntityFactory implements ContainerFactoryInterface{
     /**
      * 
      *
@@ -18,12 +18,43 @@ class EntityFactory implements ContainerInterface{
         return new Entity($id."-".uniqid());
     }
 
+            /**
+     * @param int $first
+     * @param string $after
+     * @param int $last
+     * @param string $before
+     * @param FilterInputInterface $filter
+     * @param SortingInputInterface $sort
+     * @return bool
+     */
+    public function list(int $first = 0,string $after = "",int $last = -1,string $before = "",FilterInputInterface $filter = null,SortingInputInterface $sort = null){
+        return [];
+    }
+
     /**
      * @param string $id Identifier of the entry to look for.
      *
      * @return bool
      */
     public function has($id){
+        return true;
+    }
+
+        /**
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @return bool
+     */
+    public function delete($id){
+        return true;
+    }
+
+    /**
+     * @param string $id Identifier of the entry to look for.
+     * @param Entity $entity
+     * @return bool
+     */
+    public function update(string $id,$entity){
         return true;
     }
 }

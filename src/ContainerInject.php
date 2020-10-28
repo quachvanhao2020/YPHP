@@ -1,6 +1,7 @@
 <?php
 namespace YPHP;
-use Psr\Container\ContainerInterface;
+//use Psr\Container\ContainerInterface;
+use YPHP\ContainerFactoryInterface as ContainerInterface;
 
 trait ContainerInject{
             /**

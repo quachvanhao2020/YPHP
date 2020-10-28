@@ -19,6 +19,17 @@ function tran($current,$target){
     }
     return $result;
 }
+function save($entity){
+    if($entity instanceof Entity){
+        return $entity->save();
+    }
+}
+
+function destroy($entity){
+    if($entity instanceof Entity){
+        return $entity->destroy();
+    }
+}
 
 function object_to_array($object){
     return \json_decode(\json_encode($object),true);
