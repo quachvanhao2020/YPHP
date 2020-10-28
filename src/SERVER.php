@@ -1,5 +1,5 @@
 <?php
-namespace ZendShare;
+namespace YPHP;
 
 class SERVER{
 
