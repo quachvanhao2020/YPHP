@@ -71,7 +71,7 @@ class Entity implements SerializableInterface{
      *
      * @return  self
      */ 
-    public function setClass(string $class)
+    public function setClass(string $class = "")
     {
         $this->class = $class;
 

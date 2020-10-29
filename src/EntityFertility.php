@@ -70,6 +70,18 @@ class EntityFertility extends Entity{
         ]);
     }
 
+    public function __arrayTo(array $array)
+    {
+        parent::__arrayTo($array);
+        $this->setName($array[self::NAME]);
+        $this->setStatus($array[self::STATUS]);
+        $this->setNode($array[self::NOTE]);
+        $this->setChildrens($array[self::CHILDRENS]);
+        $this->setParent($array[self::PARENT]);
+        $this->setRef($array[self::REF]);
+        $this->setDateCreated($array[self::DATECREATED]);
+    }
+
     /**
      * Get the value of childrens
      *

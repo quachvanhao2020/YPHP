@@ -10,6 +10,16 @@ function std($object){
 function arr($object){
     return $object->__toArray();
 }
+function obj_to($obj,$entity){
+    if($entity instanceof Entity){
+      if(is_string($obj)){
+        $obj = \json_decode($obj,JSON_OBJECT_AS_ARRAY);
+      }
+      if(is_array($obj)){
+        return $entity->__arrayTo($obj);
+      }
+    }
+}
 function tran($current,$target){
     $result = null;
     if($current instanceof Entity){
