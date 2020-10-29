@@ -5,10 +5,18 @@ use YPHP\EntityFactory;
 use YPHP\EntityFertility;
 use YPHP\EntityFertilityEnum;
 use YPHP\Mapper;
+use YPHP\SimpleCache;
+
 $map = new Mapper();
-$entity = new Entity("abc");
-$entity->setContainer(new EntityFactory());
+$entity = new Entity("abcd");
+$fa = new EntityFactory();
+$fa->setCache(new SimpleCache());
+$fa->update("abcd",$entity);
+
+$entity->setContainer($fa);
 $entity->instance();
+var_dump($entity);
+return;
 /** @var EntityFertility */
 $entity = tran($entity,EntityFertility::class);
 $entity->setStatus(EntityFertilityEnum::ACTIVE);

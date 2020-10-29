@@ -4,6 +4,7 @@ namespace YPHP;
 use YPHP\ContainerFactoryInterface;
 
 class EntityFactory implements ContainerFactoryInterface{
+    use CacheInject;
     /**
      * 
      *
@@ -15,6 +16,11 @@ class EntityFactory implements ContainerFactoryInterface{
      * @return Entity.
      */
     public function get($id){
+        try {
+            return $this->getCache()->getItem($id);
+        } catch (\Exception $ex) {
+            //throw $th;
+        }
         return new Entity($id."-".uniqid());
     }
 
@@ -55,6 +61,11 @@ class EntityFactory implements ContainerFactoryInterface{
      * @return bool
      */
     public function update(string $id,$entity){
+        try {
+            return $this->getCache()->setItem($id,$entity);
+        } catch (\Exception $ex) {
+            //throw $th;
+        }
         return true;
     }
 }

@@ -7,9 +7,10 @@ class EntityFertility extends Entity{
     const NAME = "name";
     const STATUS = "status";
     const PARENT = "parent";
-    const CHILDS = "childrens";
+    const CHILDRENS = "childrens";
     const DATECREATED = "dateCreated";
     const REF = "ref";
+    const NOTE = "note";
 
         /**
      * 
@@ -17,6 +18,13 @@ class EntityFertility extends Entity{
      * @var string
      */
     protected $name;
+
+            /**
+     * 
+     *
+     * @var string
+     */
+    protected $node;
 
     /**
      * 
@@ -54,7 +62,8 @@ class EntityFertility extends Entity{
         return array_merge(parent::__toArray(),[
             self::NAME => $this->getName(),
             self::STATUS => $this->getStatus(),
-            self::CHILDS => $this->getChildrens(),
+            self::NOTE => $this->getNode(),
+            self::CHILDRENS => $this->getChildrens(),
             self::PARENT => $this->getParent(),
             self::REF => $this->getRef(),
             self::DATECREATED => $this->getDateCreated(),
@@ -78,7 +87,7 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setChildrens(EntityStorage $childrens = null)
+    public function setChildrens($childrens = [])
     {
         if($childrens == null) $childrens = new EntityStorage();
         $this->childrens = $childrens;
@@ -202,6 +211,30 @@ class EntityFertility extends Entity{
     {
         if(!EntityStatus::isValidValue($status)) $status = EntityStatus::VIRUS;
         $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get the value of node
+     *
+     * @return  string
+     */ 
+    public function getNode()
+    {
+        return $this->node;
+    }
+
+    /**
+     * Set the value of node
+     *
+     * @param  string  $node
+     *
+     * @return  self
+     */ 
+    public function setNode(string $node)
+    {
+        $this->node = $node;
+
         return $this;
     }
 }
