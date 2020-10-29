@@ -47,9 +47,11 @@ trait ContainerInject{
             $entity = $container->get($this->uniqid());
             if($entity instanceof Entity && get_class($entity) == self::theClass()){
                 if($this instanceof Entity){
-                    $this->__arrayTo($entity->__toArray());
+                    $array = $entity->__toArray();
+                    $this->__arrayTo($array);
                 }
             }
         }
     }
+
 }

@@ -101,7 +101,7 @@ class SimpleCache implements StorageInterface{
      * @throws \YPHP\Exception\ExceptionInterface
      */
     public function setItem($key, $value){
-        $this->storage[$key] = $value;
+        $this->storage[$key] = \object_to_array($value);
         return true;
     }
 

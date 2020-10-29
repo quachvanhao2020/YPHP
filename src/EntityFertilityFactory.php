@@ -1,7 +1,8 @@
 <?php
 namespace YPHP;
+use YPHP\EntityFertility;
 
-class EntityFactory extends BaseContainerFactory{
+class EntityFertilityFactory implements ContainerFactoryInterface{
     
     use CacheInject;
     /**
@@ -20,7 +21,7 @@ class EntityFactory extends BaseContainerFactory{
         } catch (\Exception $ex) {
             //throw $th;
         }
-        return new Entity($id."-".uniqid());
+        return new EntityFertility($id."-".uniqid());
     }
 
             /**
@@ -56,7 +57,7 @@ class EntityFactory extends BaseContainerFactory{
 
     /**
      * @param string $id Identifier of the entry to look for.
-     * @param Entity $entity
+     * @param EntityFertility $entity
      * @return bool
      */
     public function update(string $id,$entity){

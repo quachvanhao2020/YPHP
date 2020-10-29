@@ -8,7 +8,10 @@ function std($object){
     return $object->__toStd();
 }
 function arr($object){
-    return $object->__toArray();
+    if($object instanceof Entity){
+        return $object->__toArray();
+    }
+    return (array)$object;
 }
 function obj_to($obj,$entity){
     if($entity instanceof Entity){

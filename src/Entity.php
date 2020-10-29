@@ -27,7 +27,7 @@ class Entity implements SerializableInterface{
     }
 
     public function uniqid(){
-        return $this->getId();
+        return $this->getClass()."-".$this->getId();
     }
 
     /**

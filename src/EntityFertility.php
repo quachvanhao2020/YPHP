@@ -82,6 +82,17 @@ class EntityFertility extends Entity{
         $this->setDateCreated($array[self::DATECREATED]);
     }
 
+    public function jsonSerialize() {
+        $array = $this->__toArray();
+        $parent = $this->getParent();
+        if($parent instanceof self){
+            $parent = clone $parent;
+            $parent->setChildrens([]);
+            $array[self::PARENT] = $parent;
+        }
+        return $array;
+    }
+
     /**
      * Get the value of childrens
      *
@@ -102,6 +113,11 @@ class EntityFertility extends Entity{
     public function setChildrens($childrens = [])
     {
         if($childrens == null) $childrens = new EntityStorage();
+        foreach ($childrens->getIterator() as $value) {
+            if($value instanceof self){
+                $value->setParent($this);
+            }
+        }
         $this->childrens = $childrens;
         return $this;
     }
