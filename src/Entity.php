@@ -104,10 +104,10 @@ class Entity implements SerializableInterface{
         return $this->__toArray();
     }
 
-    public function __arrayTo(array $array)
+    public function __arrayTo($array)
     {
-        $this->setId($array[self::ID]);
-        $this->setClass($array[self::__CLASS]);
+        $this->setId(@$array[self::ID]);
+        $this->setClass(@$array[self::__CLASS]);
     }
 
     public function save(){}

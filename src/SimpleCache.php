@@ -3,14 +3,27 @@ namespace YPHP;
 
 class SimpleCache implements StorageInterface{
 
+    protected $filePath;
+
     /**
      * @var array
      */
-    protected $storage = [
-        "123" => [
-            "id" => "123",
-        ],
-    ];
+    protected $storage = [];
+
+    public function __construct()
+    {
+        $path = __DIR__."/cache.json";
+        $this->filePath = $path;
+        if(!file_exists($path)){
+            touch($path);
+        }
+        $this->storage = json_decode(\file_get_contents($this->filePath),JSON_OBJECT_AS_ARRAY);
+    }
+
+    public function __destruct()
+    {
+        \file_put_contents($this->filePath,json_encode($this->getStorage(),JSON_PRETTY_PRINT));
+    }
 
         /**
      * Set options.

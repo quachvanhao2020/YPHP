@@ -29,7 +29,7 @@ $fm->setMap([
     Entity::class => Entity::class,
 ]);
 
-$fm->update("Foo",$entity);
+//$fm->update("Foo",$entity);
 
 $result = $fm->get($entity->uniqid());
 var_dump($result);

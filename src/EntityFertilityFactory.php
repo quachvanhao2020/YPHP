@@ -17,7 +17,7 @@ class EntityFertilityFactory implements ContainerFactoryInterface{
      */
     public function get($id){
         try {
-            return $this->getCache()->getItem($id);
+            return \obj_to($this->getCache()->getItem($id),new EntityFertility());
         } catch (\Exception $ex) {
             //throw $th;
         }

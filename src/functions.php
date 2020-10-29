@@ -18,10 +18,17 @@ function obj_to($obj,$entity){
       if(is_string($obj)){
         $obj = \json_decode($obj,JSON_OBJECT_AS_ARRAY);
       }
-      if(is_array($obj)){
-        return $entity->__arrayTo($obj);
+      if(is_iterable($obj)){
+          foreach ($obj as $key => $value) {
+              if(isset($value["id"]) && isset($value["__class"])){
+                  $class = $value["__class"];
+                  $obj[$key] = \obj_to($value,new $class());
+              }
+          }
+        $entity->__arrayTo($obj);
       }
     }
+    return $entity;
 }
 function tran($current,$target){
     $result = null;

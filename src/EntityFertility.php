@@ -2,6 +2,7 @@
 namespace YPHP;
 use YPHP\EntityFertilityEnum as EntityStatus;
 use YPHP\Storage\EntityStorage;
+use YPHP\Storage\EntityFertilityStorage;
 
 class EntityFertility extends Entity{
     const NAME = "name";
@@ -54,7 +55,7 @@ class EntityFertility extends Entity{
     /**
      * 
      *
-     * @var int
+     * @var DateTime
      */
     protected $dateCreated;
 
@@ -70,16 +71,16 @@ class EntityFertility extends Entity{
         ]);
     }
 
-    public function __arrayTo(array $array)
+    public function __arrayTo($array)
     {
         parent::__arrayTo($array);
-        $this->setName($array[self::NAME]);
-        $this->setStatus($array[self::STATUS]);
-        $this->setNode($array[self::NOTE]);
-        $this->setChildrens($array[self::CHILDRENS]);
-        $this->setParent($array[self::PARENT]);
-        $this->setRef($array[self::REF]);
-        $this->setDateCreated($array[self::DATECREATED]);
+        $this->setName(@$array[self::NAME]);
+        $this->setStatus(@$array[self::STATUS]);
+        $this->setNode(@$array[self::NOTE]);
+        $this->setChildrens(@$array[self::CHILDRENS]);
+        $this->setParent(@$array[self::PARENT]);
+        $this->setRef(@$array[self::REF]);
+        $this->setDateCreated(@$array[self::DATECREATED]);
     }
 
     public function jsonSerialize() {
@@ -106,17 +107,21 @@ class EntityFertility extends Entity{
     /**
      * Set the value of childrens
      *
-     * @param  EntityStorage  $childrens
+     * @param  EntityFertilityStorage  $childrens
      *
      * @return  self
      */ 
     public function setChildrens($childrens = [])
     {
-        if($childrens == null) $childrens = new EntityStorage();
-        foreach ($childrens->getIterator() as $value) {
+        if($childrens == null || is_array($childrens)) $childrens = new EntityFertilityStorage($childrens);
+        foreach ($childrens->getIterator() as $key => $value) {
+            if(is_iterable($value)){
+                $value = \obj_to($value,new self());
+            }
             if($value instanceof self){
                 $value->setParent($this);
             }
+            $childrens[$key] = $value;
         }
         $this->childrens = $childrens;
         return $this;
@@ -139,7 +144,7 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setParent(Entity $parent = null)
+    public function setParent($parent = null)
     {
         $this->parent = $parent;
 
@@ -173,7 +178,7 @@ class EntityFertility extends Entity{
     /**
      * Get the value of dateCreated
      *
-     * @return  int
+     * @return  DateTime
      */ 
     public function getDateCreated()
     {
@@ -183,11 +188,11 @@ class EntityFertility extends Entity{
     /**
      * Set the value of dateCreated
      *
-     * @param  int  $dateCreated
+     * @param  DateTime  $dateCreated
      *
      * @return  self
      */ 
-    public function setDateCreated(int $dateCreated = null)
+    public function setDateCreated(DateTime $dateCreated = null)
     {
         $this->dateCreated = $dateCreated;
 
@@ -259,7 +264,7 @@ class EntityFertility extends Entity{
      *
      * @return  self
      */ 
-    public function setNode(string $node)
+    public function setNode(string $node = null)
     {
         $this->node = $node;
 

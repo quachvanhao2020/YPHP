@@ -63,8 +63,20 @@ class ManagerFactory implements ContainerFactoryInterface{
      * @return Entity.
      */
     public function get($id){
+        if(is_array($id)){
+            foreach ($id as $key => $value) {
+                $id[$key] = $this->get($value);
+            }
+            return $id;
+        }
+        if($id instanceof Entity){
+            $id = $id->uniqid();
+        }
+        if(!is_string($id)) return $id;
         if(isset($this->mapEntity[$id])){
-            return $this->mapEntity[$id];
+            $value = $this->mapEntity[$id];
+            //var_dump($value);
+            return $value;
         }
         $param = explode("-",$id);
         $fa = $this->getMap()[$param[0]];
@@ -72,10 +84,33 @@ class ManagerFactory implements ContainerFactoryInterface{
             $fa = new $fa();
         }
         if($fa instanceof ContainerFactoryInterface){
-            $result = $fa->get($param[1]);
+            $entity = $fa->get($id);
+            if($entity instanceof Entity){
+                $this->mapEntity[$entity->uniqid()] = $entity;
+                $array = arr($entity);
+                //var_dump($array); return;
+
+                foreach ($array as $key => $value) {
+                    if($value instanceof ArrayObject){
+                        $value = $value->getStorage();
+                    }
+                    if(is_array($value)){
+                        $value = $this->get($value);
+                    }
+                    if($value instanceof Entity){
+                        if(!isset($this->mapEntity[$value->uniqid()])){
+                            $value = $this->get($value->uniqid());
+                        }else{
+                            $value = $this->mapEntity[$value->uniqid()];
+                            //var_dump($value);
+                        }
+                    }
+                    $array[$key] = $value;
+                }
+                $entity->__arrayTo($array);
+                return $entity;
+            }
         }
-        var_dump($result);
-        //return new EntityFertility($id."-".uniqid());
     }
 
             /**
@@ -122,7 +157,7 @@ class ManagerFactory implements ContainerFactoryInterface{
                 $fa = new $fa();
             }
             if($fa instanceof ContainerFactoryInterface){
-                $fa->update($id,$entity);
+                $fa->update($entity->uniqid(),$entity);
             }
             $this->mapEntity[$entity->uniqid()] = $entity;
         }

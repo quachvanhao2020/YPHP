@@ -1,7 +1,7 @@
 <?php
 namespace YPHP;
 
-class EntityFactory extends BaseContainerFactory{
+class EntityFactory implements ContainerFactoryInterface{
     
     use CacheInject;
     /**
