@@ -3,6 +3,7 @@ namespace YPHP;
 use YPHP\EntityFertilityEnum as EntityStatus;
 use YPHP\Storage\EntityStorage;
 use YPHP\Storage\EntityFertilityStorage;
+use DateTime;
 
 class EntityFertility extends Entity{
     const NAME = "name";
@@ -60,7 +61,7 @@ class EntityFertility extends Entity{
     protected $dateCreated;
 
     public function __toArray(){
-        return array_merge(parent::__toArray(),[
+        return array_merge([
             self::NAME => $this->getName(),
             self::STATUS => $this->getStatus(),
             self::NOTE => $this->getNode(),
@@ -68,7 +69,7 @@ class EntityFertility extends Entity{
             self::PARENT => $this->getParent(),
             self::REF => $this->getRef(),
             self::DATECREATED => $this->getDateCreated(),
-        ]);
+        ],parent::__toArray());
     }
 
     public function __arrayTo($array)
@@ -80,7 +81,13 @@ class EntityFertility extends Entity{
         $this->setChildrens(@$array[self::CHILDRENS]);
         $this->setParent(@$array[self::PARENT]);
         $this->setRef(@$array[self::REF]);
-        $this->setDateCreated(@$array[self::DATECREATED]);
+        $dateCreated = @$array[self::DATECREATED];
+        if($dateCreated instanceof \DateTime){
+            
+        }else if(is_string($dateCreated)){
+            $dateCreated = @\DateTime::createFromFormat('Y-m-d H:i:s',$dateCreated);
+        }
+        $this->setDateCreated($dateCreated);
     }
 
     public function jsonSerialize() {
@@ -114,15 +121,6 @@ class EntityFertility extends Entity{
     public function setChildrens($childrens = [])
     {
         if($childrens == null || is_array($childrens)) $childrens = new EntityFertilityStorage($childrens);
-        foreach ($childrens->getIterator() as $key => $value) {
-            if(is_iterable($value)){
-                $value = \obj_to($value,new self());
-            }
-            if($value instanceof self){
-                $value->setParent($this);
-            }
-            $childrens[$key] = $value;
-        }
         $this->childrens = $childrens;
         return $this;
     }

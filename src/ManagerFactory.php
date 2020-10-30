@@ -14,7 +14,7 @@ class ManagerFactory implements ContainerFactoryInterface{
         return self::$instance;
     }
 
-            /**
+    /**
      * 
      *
      * @var array
@@ -63,19 +63,12 @@ class ManagerFactory implements ContainerFactoryInterface{
      * @return Entity.
      */
     public function get($id){
-        if(is_array($id)){
-            foreach ($id as $key => $value) {
-                $id[$key] = $this->get($value);
-            }
-            return $id;
-        }
         if($id instanceof Entity){
             $id = $id->uniqid();
         }
         if(!is_string($id)) return $id;
         if(isset($this->mapEntity[$id])){
             $value = $this->mapEntity[$id];
-            //var_dump($value);
             return $value;
         }
         $param = explode("-",$id);
@@ -86,28 +79,15 @@ class ManagerFactory implements ContainerFactoryInterface{
         if($fa instanceof ContainerFactoryInterface){
             $entity = $fa->get($id);
             if($entity instanceof Entity){
+                $container = $this;
                 $this->mapEntity[$entity->uniqid()] = $entity;
                 $array = arr($entity);
-                //var_dump($array); return;
-
-                foreach ($array as $key => $value) {
-                    if($value instanceof ArrayObject){
-                        $value = $value->getStorage();
+                array_walk_recursive($array, function($item, $key) use($container){
+                    if($item instanceof Entity){
+                        $item->setContainer($container);
+                        $item->instance();
                     }
-                    if(is_array($value)){
-                        $value = $this->get($value);
-                    }
-                    if($value instanceof Entity){
-                        if(!isset($this->mapEntity[$value->uniqid()])){
-                            $value = $this->get($value->uniqid());
-                        }else{
-                            $value = $this->mapEntity[$value->uniqid()];
-                            //var_dump($value);
-                        }
-                    }
-                    $array[$key] = $value;
-                }
-                $entity->__arrayTo($array);
+                });
                 return $entity;
             }
         }

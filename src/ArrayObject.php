@@ -23,6 +23,16 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
         return $this->getStorage();
     }
 
+    public function __arrayTo($array){
+        foreach ($array as $key => $value) {
+            if(is_iterable($value)){
+                $value = \obj_to($value);
+            }
+            $array[$key] = $value;
+        }
+        $this->setStorage($array);
+    }
+
     public function jsonSerialize() {
         return $this->__toArray();
     }
@@ -37,7 +47,8 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
     public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
     {
         $this->setFlags($flags);
-        $this->setStorage($input);
+        //$this->setStorage($input);
+        if(is_array($input)) $this->__arrayTo($input);
         $this->setIteratorClass($iteratorClass);
         $this->protectedProperties = array_keys(get_object_vars($this));
     }

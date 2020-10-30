@@ -3,17 +3,29 @@
 use YPHP\Entity;
 use YPHP\Translation;
 use YPHP\TranslationService;
-
+use YPHP\ArrayObject;
 function std($object){
     return $object->__toStd();
 }
 function arr($object){
     if($object instanceof Entity){
-        return $object->__toArray();
+        $array = $object->__toArray();
+        foreach ($array as $key => $value) {
+            if($value instanceof ArrayObject){
+                $array[$key] = $value->__toArray();
+            }
+        }
+        return $array;
     }
     return (array)$object;
 }
-function obj_to($obj,$entity){
+function obj_to($obj,$entity = null){
+    if(!$entity){
+        if(isset($obj["id"]) && isset($obj["__class"])){
+            $class = $obj["__class"];
+            $entity = new $class();
+        }
+    }
     if($entity instanceof Entity){
       if(is_string($obj)){
         $obj = \json_decode($obj,JSON_OBJECT_AS_ARRAY);
@@ -33,6 +45,9 @@ function obj_to($obj,$entity){
 function tran($current,$target){
     $result = null;
     if($current instanceof Entity){
+        if($target instanceof Entity && get_class($current) == get_class($target)){
+            $target->__arrayTo($current->__toArray());
+        }
         $translation = new Translation(get_class($current),$target);
         $translation->setCurrentEntity($current);
         $result = TranslationService::getInstance()->translate($translation,null);

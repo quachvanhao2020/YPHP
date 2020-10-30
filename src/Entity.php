@@ -78,7 +78,7 @@ class Entity implements SerializableInterface{
         return $this;
     }
 
-    public function ___debugInfo()
+    public function __debugInfo()
     {
         return arr($this);
     }

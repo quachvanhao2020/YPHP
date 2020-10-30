@@ -2,7 +2,7 @@
     "YPHP\\EntityFertility-Foo": {
         "id": "Foo",
         "__class": "YPHP\\EntityFertility",
-        "name": null,
+        "name": "Foo",
         "status": null,
         "note": null,
         "childrens": [
@@ -37,12 +37,12 @@
         ],
         "parent": null,
         "ref": null,
-        "dateCreated": null
+        "dateCreated": "2017-08-31 00:00:00"
     },
     "YPHP\\EntityFertility-SonFoo": {
         "id": "SonFoo",
         "__class": "YPHP\\EntityFertility",
-        "name": null,
+        "name": "SonFoo",
         "status": null,
         "note": null,
         "childrens": null,
@@ -58,34 +58,34 @@
             "dateCreated": null
         },
         "ref": null,
-        "dateCreated": null
+        "dateCreated": "2017-08-31 00:00:00"
     },
     "YPHP\\EntityFertility-SonFoo2": {
         "id": "SonFoo2",
         "__class": "YPHP\\EntityFertility",
-        "name": null,
+        "name": "SonFoo2",
         "status": null,
         "note": null,
-        "childrens": null,
+        "childrens": [
+            {
+                "id": "SonFoo3",
+                "__class": "YPHP\\EntityFertility",
+                "name": null,
+                "status": null,
+                "note": "null",
+                "childrens": null,
+                "parent": null,
+                "ref": null,
+                "dateCreated": null
+            }
+        ],
         "parent": {
             "id": "Foo",
             "__class": "YPHP\\EntityFertility",
             "name": null,
             "status": null,
             "note": null,
-            "childrens": [
-                {
-                    "id": "SonFoo3",
-                    "__class": "YPHP\\EntityFertility",
-                    "name": null,
-                    "status": null,
-                    "note": null,
-                    "childrens": null,
-                    "parent": null,
-                    "ref": null,
-                    "dateCreated": null
-                }
-            ],
+            "childrens": [],
             "parent": null,
             "ref": null,
             "dateCreated": null
@@ -96,12 +96,35 @@
     "YPHP\\EntityFertility-SonFoo3": {
         "id": "SonFoo3",
         "__class": "YPHP\\EntityFertility",
-        "name": null,
+        "name": "SonFoo3",
         "status": null,
-        "note": null,
+        "note": "2017-08-31 00:00:00",
+        "childrens": [
+            {
+                "id": "SonFoo4",
+                "__class": "YPHP\\EntityFertility",
+                "name": "SonFoo3",
+                "status": null,
+                "note": "2017-08-31 00:00:00",
+                "childrens": null,
+                "parent": null,
+                "ref": null,
+                "dateCreated": null
+            }
+        ],
+        "parent": null,
+        "ref": null,
+        "dateCreated": "2017-08-31 00:00:00"
+    },
+    "YPHP\\EntityFertility-SonFoo4": {
+        "id": "SonFoo4",
+        "__class": "YPHP\\EntityFertility",
+        "name": "SonFoo4",
+        "status": null,
+        "note": "2017-08-31 00:00:00",
         "childrens": null,
         "parent": null,
         "ref": null,
-        "dateCreated": null
+        "dateCreated": "2017-08-31 00:00:00"
     }
 }
