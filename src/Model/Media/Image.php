@@ -80,7 +80,7 @@ class Image extends Entity {
      *
      * @return  self
      */ 
-    public function setSrc(string $src)
+    public function setSrc(string $src = null)
     {
         $this->src = $src;
 

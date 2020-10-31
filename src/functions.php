@@ -3,6 +3,8 @@ use YPHP\Entity;
 use YPHP\Translation;
 use YPHP\TranslationService;
 use YPHP\ArrayObject;
+use YPHP\Mapper;
+
 function std($object){
     return $object->__toStd();
 }
@@ -50,6 +52,19 @@ function tran($current,$target){
         $translation = new Translation(get_class($current),$target);
         $translation->setCurrentEntity($current);
         $result = TranslationService::getInstance()->translate($translation,null);
+        return $result;
+    }
+    if(is_string($target)){
+        if (class_exists($target)) {
+            $target = new $target(); 
+        }else return;
+    }
+    if(is_array($current)){
+        $current = \array_to_object($current);
+    }
+    if($current instanceof \stdClass){
+        $map = new Mapper();
+        $result = $map->map($current,$target);
     }
     return $result;
 }
