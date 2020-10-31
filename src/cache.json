@@ -1,43 +1,26 @@
 {
     "YPHP\\EntityFertility-Foo": {
-        "id": "Foo",
-        "__class": "YPHP\\EntityFertility",
-        "name": "Foo",
-        "status": null,
+        "name": "update",
+        "status": "VIRUS",
         "note": null,
         "childrens": [
             {
-                "id": "SonFoo",
-                "__class": "YPHP\\EntityFertility",
                 "name": null,
-                "status": null,
-                "note": null,
-                "childrens": null,
-                "parent": {
-                    "id": "Foo",
-                    "__class": "YPHP\\EntityFertility"
-                },
-                "ref": null,
-                "dateCreated": null
-            },
-            {
-                "id": "SonFoo2",
-                "__class": "YPHP\\EntityFertility",
-                "name": null,
-                "status": null,
+                "status": "VIRUS",
                 "note": null,
                 "childrens": [],
-                "parent": {
-                    "id": "Foo",
-                    "__class": "YPHP\\EntityFertility"
-                },
+                "parent": null,
                 "ref": null,
-                "dateCreated": null
+                "dateCreated": null,
+                "id": "YPHP\\EntityFertility-SonFoo5-5f9cdd437db84",
+                "__class": "YPHP\\EntityFertility"
             }
         ],
         "parent": null,
         "ref": null,
-        "dateCreated": "2017-08-31 00:00:00"
+        "dateCreated": null,
+        "id": "Foo",
+        "__class": "YPHP\\EntityFertility"
     },
     "YPHP\\EntityFertility-SonFoo": {
         "id": "SonFoo",
@@ -61,37 +44,25 @@
         "dateCreated": "2017-08-31 00:00:00"
     },
     "YPHP\\EntityFertility-SonFoo2": {
-        "id": "SonFoo2",
-        "__class": "YPHP\\EntityFertility",
         "name": "SonFoo2",
-        "status": null,
+        "status": "VIRUS",
         "note": null,
-        "childrens": [
-            {
-                "id": "SonFoo3",
-                "__class": "YPHP\\EntityFertility",
-                "name": null,
-                "status": null,
-                "note": "null",
-                "childrens": null,
-                "parent": null,
-                "ref": null,
-                "dateCreated": null
-            }
-        ],
+        "childrens": [],
         "parent": {
-            "id": "Foo",
-            "__class": "YPHP\\EntityFertility",
-            "name": null,
-            "status": null,
+            "name": "update",
+            "status": "VIRUS",
             "note": null,
             "childrens": [],
             "parent": null,
             "ref": null,
-            "dateCreated": null
+            "dateCreated": null,
+            "id": "Foo",
+            "__class": "YPHP\\EntityFertility"
         },
         "ref": null,
-        "dateCreated": null
+        "dateCreated": null,
+        "id": "SonFoo2",
+        "__class": "YPHP\\EntityFertility"
     },
     "YPHP\\EntityFertility-SonFoo3": {
         "id": "SonFoo3",
@@ -126,5 +97,16 @@
         "parent": null,
         "ref": null,
         "dateCreated": "2017-08-31 00:00:00"
+    },
+    "YPHP\\EntityFertility-YPHP\\EntityFertility-SonFoo5-5f9cdd437db84": {
+        "name": null,
+        "status": "VIRUS",
+        "note": null,
+        "childrens": [],
+        "parent": null,
+        "ref": null,
+        "dateCreated": null,
+        "id": "YPHP\\EntityFertility-SonFoo5-5f9cdd437db84",
+        "__class": "YPHP\\EntityFertility"
     }
 }

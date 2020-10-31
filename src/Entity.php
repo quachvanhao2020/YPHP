@@ -26,8 +26,11 @@ class Entity implements SerializableInterface{
         $this->class = get_class($this);
     }
 
-    public function uniqid(){
-        return $this->getClass()."-".$this->getId();
+    public function uniqid($force = false){
+        if(($this->container instanceof ManagerFactory) || $force){
+            return $this->getClass()."-".$this->getId();
+        }
+        return $this->getId();
     }
 
     /**
@@ -109,8 +112,6 @@ class Entity implements SerializableInterface{
         $this->setId(@$array[self::ID]);
         $this->setClass(@$array[self::__CLASS]);
     }
-
-    public function save(){}
     public function destroy(){}
 
 }

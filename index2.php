@@ -31,5 +31,16 @@ $fm->setMap([
 
 //$fm->update("Foo",$entity);
 
-$result = $fm->get($entity->uniqid());
+/** @var EntityFertility */
+$result = $fm->get($entity->uniqid(true));
+
+$result->setName("update");
+//$result->getChildrens()[0]->setChildrens([]);
+//$result->setChildrens([]);
+//var_dump($result);
+
+$fm->update($result->uniqid(),$result);
+
+//$result = $fm->get($result->uniqid());
+
 var_dump($result);

@@ -1,10 +1,10 @@
 <?php
 namespace YPHP;
-//use Psr\Container\ContainerInterface;
+
 use YPHP\ContainerFactoryInterface as ContainerInterface;
 
 trait ContainerInject{
-            /**
+    /**
      * 
      *
      * @var ContainerInterface
@@ -35,21 +35,37 @@ trait ContainerInject{
         return $this;
     }
 
-    public abstract function uniqid();
+    public abstract function uniqid($force = false);
 
     public static function theClass(){
         return static::class;
     }
 
     public function instance(){
-        if($this->container){
-            $container = $this->getContainer();
-            $entity = $container->get($this->uniqid());
+        if($container = $this->getContainer()){
+            $entity = null;
+            $id = $this->uniqid();
+            if($container instanceof ManagerFactory){
+                $entity = $container->_get($id);
+            }else{
+                $entity = $container->get($id);
+            }
             if($entity instanceof Entity && get_class($entity) == self::theClass()){
                 if($this instanceof Entity){
                     \tran($entity,$this);
                 }
             }
+        }
+    }
+
+    public function save(){
+        if($container = $this->getContainer()){
+            if($this instanceof Entity){
+                if($container instanceof ManagerFactory){
+                    return $container->_update($this->uniqid(),$this);
+                }
+                return $container->update($this->uniqid(),$this);
+            }  
         }
     }
 

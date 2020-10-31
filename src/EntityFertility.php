@@ -86,6 +86,8 @@ class EntityFertility extends Entity{
             
         }else if(is_string($dateCreated)){
             $dateCreated = @\DateTime::createFromFormat('Y-m-d H:i:s',$dateCreated);
+        }else if(is_array($dateCreated)){
+            $dateCreated = @new \DateTime($dateCreated["date"]);
         }
         $this->setDateCreated($dateCreated);
     }

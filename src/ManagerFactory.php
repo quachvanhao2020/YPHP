@@ -52,17 +52,26 @@ class ManagerFactory implements ContainerFactoryInterface{
         return $this;
     }
 
+            /**
+     * 
+     *
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @return Entity.
+     */
+    public function get($id){
+        $this->setMapEntity([]);
+        return $this->_get($id);
+    }
+
         /**
      * 
      *
      * @param string $id Identifier of the entry to look for.
      *
-     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
-     * @throws ContainerExceptionInterface Error while retrieving the entry.
-     *
      * @return Entity.
      */
-    public function get($id){
+    public function _get($id){
         if($id instanceof Entity){
             $id = $id->uniqid();
         }
@@ -80,6 +89,7 @@ class ManagerFactory implements ContainerFactoryInterface{
             $entity = $fa->get($id);
             if($entity instanceof Entity){
                 $container = $this;
+                $entity->setContainer($container);
                 $this->mapEntity[$entity->uniqid()] = $entity;
                 $array = arr($entity);
                 array_walk_recursive($array, function($item, $key) use($container){
@@ -124,12 +134,25 @@ class ManagerFactory implements ContainerFactoryInterface{
         return true;
     }
 
-    /**
+        /**
      * @param string $id Identifier of the entry to look for.
      * @param EntityFertility $entity
      * @return bool
      */
     public function update(string $id,$entity){
+        $this->setMapEntity([]);
+        return $this->_update($id,$entity);
+    }
+
+    /**
+     * @param string $id Identifier of the entry to look for.
+     * @param EntityFertility $entity
+     * @return bool
+     */
+    public function _update(string $id,$entity){
+        if(isset($this->mapEntity[$id])){
+            return true;
+        }
         if($entity instanceof Entity){
             $class = get_class($entity);
             $fa = $this->getMap()[$class];
@@ -137,22 +160,16 @@ class ManagerFactory implements ContainerFactoryInterface{
                 $fa = new $fa();
             }
             if($fa instanceof ContainerFactoryInterface){
+                $container = $this;
                 $fa->update($entity->uniqid(),$entity);
-            }
-            $this->mapEntity[$entity->uniqid()] = $entity;
-        }
-        $array = arr($entity);
-        foreach ($array as $key => $value) {
-            if($value instanceof ArrayObject){
-                $value = $value->getStorage();
-            }
-            if(is_array($value)){
-                $this->update("arr",$value);
-            }
-            if($value instanceof Entity){
-                if(!isset($this->mapEntity[$value->uniqid()])){
-                    $this->update($value->getId(),$value);
-                }
+                $this->mapEntity[$entity->uniqid()] = $entity;
+                $array = arr($entity);
+                array_walk_recursive($array, function($item, $key) use($container){
+                    if($item instanceof Entity){
+                        $item->setContainer($container);
+                        $item->save();
+                    }
+                });
             }
         }
     }
