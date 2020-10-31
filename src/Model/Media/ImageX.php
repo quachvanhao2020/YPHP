@@ -15,7 +15,7 @@ class ImageX extends Image{
         ]);
     }
 
-    public function __arrayTo(array $array)
+    public function __arrayTo($array)
     {
         parent::__arrayTo($array);
         $this->setThumb(@$array[self::THUMB]);
@@ -38,7 +38,7 @@ class ImageX extends Image{
      *
      * @return  self
      */ 
-    public function setThumb(Image $thumb)
+    public function setThumb(Image $thumb = null)
     {
         $this->thumb = $thumb;
 

@@ -25,7 +25,7 @@ class Image extends Entity {
         ]);
     }
 
-    public function __arrayTo(array $array)
+    public function __arrayTo($array)
     {
         parent::__arrayTo($array);
         $this->setSrc(@$array[self::SRC]);
@@ -180,7 +180,7 @@ class Image extends Entity {
      *
      * @return  self
      */ 
-    public function setThumb(Image $thumb)
+    public function setThumb(Image $thumb = null)
     {
         $this->thumb = $thumb;
 

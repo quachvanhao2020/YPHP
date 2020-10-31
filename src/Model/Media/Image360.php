@@ -12,7 +12,7 @@ class Image360 extends ImageX{
         ]);
     }
 
-    public function __arrayTo(array $array)
+    public function __arrayTo($array)
     {
         parent::__arrayTo($array);
         $this->setImages(@$array[self::IMAGES]);

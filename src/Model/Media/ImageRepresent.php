@@ -15,7 +15,7 @@ class ImageRepresent extends Entity{
         ]);
     }
 
-    public function __arrayTo(array $array)
+    public function __arrayTo($array)
     {
         parent::__arrayTo($array);
         $this->setLogo(@$array[self::LOGO]);
@@ -75,7 +75,7 @@ class ImageRepresent extends Entity{
      *
      * @return  self
      */ 
-    public function setLogo(Image $logo)
+    public function setLogo(Image $logo = null)
     {
         $this->logo = $logo;
 

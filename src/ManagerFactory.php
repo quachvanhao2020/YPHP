@@ -155,7 +155,7 @@ class ManagerFactory implements ContainerFactoryInterface{
         }
         if($entity instanceof Entity){
             $class = get_class($entity);
-            $fa = @$this->getMap()[$class];
+            $fa = @($this->map[$class]);
             if(is_string($fa)){
                 $fa = new $fa();
             }
