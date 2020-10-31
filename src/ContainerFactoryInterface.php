@@ -19,11 +19,11 @@ interface ContainerFactoryInterface extends ContainerInterface{
      * @param Entity $entity
      * @return bool
      */
-    function update(string $id,$entity);
+    function update($id,$entity);
         /**
      * @param string $id Identifier of the entry to look for.
      * 
      * @return bool
      */
-    function delete(string $id);
+    function delete($id);
 }

@@ -114,6 +114,9 @@ class SimpleCache implements StorageInterface{
      * @throws \YPHP\Exception\ExceptionInterface
      */
     public function setItem($key, $value){
+        if($value instanceof Entity){
+            $key = (string)SysEntity::entityTo($value);
+        }
         $this->storage[$key] = \object_to_array($value);
         return true;
     }

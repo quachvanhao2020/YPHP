@@ -1,5 +1,4 @@
 <?php
-
 use YPHP\Entity;
 use YPHP\Translation;
 use YPHP\TranslationService;
@@ -59,17 +58,14 @@ function save($entity){
         return $entity->save();
     }
 }
-
 function destroy($entity){
     if($entity instanceof Entity){
         return $entity->destroy();
     }
 }
-
 function object_to_array($object){
     return \json_decode(\json_encode($object),true);
 }
-
 function array_to_object($array) {
     $obj = new \stdClass;
     foreach($array as $k => $v) {

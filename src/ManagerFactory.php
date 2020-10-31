@@ -1,5 +1,6 @@
 <?php
 namespace YPHP;
+use YPHP\SysEntity;
 
 class ManagerFactory implements ContainerFactoryInterface{
 
@@ -61,6 +62,7 @@ class ManagerFactory implements ContainerFactoryInterface{
      */
     public function get($id){
         $this->setMapEntity([]);
+        if($id instanceof SysEntity)
         return $this->_get($id);
     }
 
@@ -71,26 +73,22 @@ class ManagerFactory implements ContainerFactoryInterface{
      *
      * @return Entity.
      */
-    public function _get($id){
-        if($id instanceof Entity){
-            $id = $id->uniqid();
-        }
-        if(!is_string($id)) return $id;
+    public function _get(SysEntity $sid){
+        $id = (string)$sid;
         if(isset($this->mapEntity[$id])){
             $value = $this->mapEntity[$id];
             return $value;
         }
-        $param = explode("-",$id);
-        $fa = $this->getMap()[$param[0]];
+        $fa = $this->getMap()[$sid->getClass()];
         if(is_string($fa)){
             $fa = new $fa();
         }
         if($fa instanceof ContainerFactoryInterface){
-            $entity = $fa->get($id);
+            $entity = $fa->get($sid->getId());
             if($entity instanceof Entity){
                 $container = $this;
                 $entity->setContainer($container);
-                $this->mapEntity[$entity->uniqid()] = $entity;
+                $this->mapEntity[$id] = $entity;
                 $array = arr($entity);
                 array_walk_recursive($array, function($item, $key) use($container){
                     if($item instanceof Entity){
@@ -139,8 +137,9 @@ class ManagerFactory implements ContainerFactoryInterface{
      * @param EntityFertility $entity
      * @return bool
      */
-    public function update(string $id,$entity){
+    public function update($id,$entity){
         $this->setMapEntity([]);
+        if($id instanceof SysEntity)
         return $this->_update($id,$entity);
     }
 
@@ -149,20 +148,21 @@ class ManagerFactory implements ContainerFactoryInterface{
      * @param EntityFertility $entity
      * @return bool
      */
-    public function _update(string $id,$entity){
+    public function _update(SysEntity $sid,$entity){
+        $id = (string)$sid;
         if(isset($this->mapEntity[$id])){
             return true;
         }
         if($entity instanceof Entity){
             $class = get_class($entity);
-            $fa = $this->getMap()[$class];
+            $fa = @$this->getMap()[$class];
             if(is_string($fa)){
                 $fa = new $fa();
             }
             if($fa instanceof ContainerFactoryInterface){
                 $container = $this;
-                $fa->update($entity->uniqid(),$entity);
-                $this->mapEntity[$entity->uniqid()] = $entity;
+                $fa->update($sid->getId(),$entity);
+                $this->mapEntity[$id] = $entity;
                 $array = arr($entity);
                 array_walk_recursive($array, function($item, $key) use($container){
                     if($item instanceof Entity){

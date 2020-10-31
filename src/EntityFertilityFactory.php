@@ -17,6 +17,9 @@ class EntityFertilityFactory implements ContainerFactoryInterface{
      */
     public function get($id){
         try {
+            if($this->cache instanceof SimpleCache){
+                $id = (string)new SysEntity($id,EntityFertility::class);
+            }
             return \obj_to($this->getCache()->getItem($id),new EntityFertility());
         } catch (\Exception $ex) {
             //throw $th;
@@ -60,7 +63,7 @@ class EntityFertilityFactory implements ContainerFactoryInterface{
      * @param EntityFertility $entity
      * @return bool
      */
-    public function update(string $id,$entity){
+    public function update($id,$entity){
         try {
             return $this->getCache()->setItem($id,$entity);
         } catch (\Exception $ex) {

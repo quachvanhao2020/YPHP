@@ -9,6 +9,7 @@ use YPHP\ManagerFactory;
 use YPHP\Mapper;
 use YPHP\SimpleCache;
 use YPHP\Storage\EntityFertilityStorage;
+use YPHP\SysEntity;
 
 $fm = new ManagerFactory();
 
@@ -31,15 +32,16 @@ $fm->setMap([
 
 //$fm->update("Foo",$entity);
 
+$sid = SysEntity::entityTo($entity);
 /** @var EntityFertility */
-$result = $fm->get($entity->uniqid(true));
+$result = $fm->get($sid);
 
-$result->setName("update");
-//$result->getChildrens()[0]->setChildrens([]);
+$result->setName("update2");
+$result->getChildrens()[0]->setNote("hello");
 //$result->setChildrens([]);
 //var_dump($result);
 
-$fm->update($result->uniqid(),$result);
+$fm->update($sid,$result);
 
 //$result = $fm->get($result->uniqid());
 

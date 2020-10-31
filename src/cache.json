@@ -1,13 +1,13 @@
 {
     "YPHP\\EntityFertility-Foo": {
-        "name": "update",
+        "name": "update2",
         "status": "VIRUS",
         "note": null,
         "childrens": [
             {
                 "name": null,
                 "status": "VIRUS",
-                "note": null,
+                "note": "hello",
                 "childrens": [],
                 "parent": null,
                 "ref": null,
@@ -101,7 +101,7 @@
     "YPHP\\EntityFertility-YPHP\\EntityFertility-SonFoo5-5f9cdd437db84": {
         "name": null,
         "status": "VIRUS",
-        "note": null,
+        "note": "hello",
         "childrens": [],
         "parent": null,
         "ref": null,

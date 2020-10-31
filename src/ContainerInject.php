@@ -35,7 +35,10 @@ trait ContainerInject{
         return $this;
     }
 
-    public abstract function uniqid($force = false);
+    /**
+     * @return string
+     */
+    public abstract function uniqid();
 
     public static function theClass(){
         return static::class;
@@ -44,11 +47,12 @@ trait ContainerInject{
     public function instance(){
         if($container = $this->getContainer()){
             $entity = null;
-            $id = $this->uniqid();
             if($container instanceof ManagerFactory){
-                $entity = $container->_get($id);
+                if($this instanceof Entity){
+                    $entity = $container->_get(SysEntity::entityTo($this));
+                }
             }else{
-                $entity = $container->get($id);
+                $entity = $container->get($this->uniqid());
             }
             if($entity instanceof Entity && get_class($entity) == self::theClass()){
                 if($this instanceof Entity){
@@ -62,7 +66,7 @@ trait ContainerInject{
         if($container = $this->getContainer()){
             if($this instanceof Entity){
                 if($container instanceof ManagerFactory){
-                    return $container->_update($this->uniqid(),$this);
+                    return $container->_update(SysEntity::entityTo($this),$this);
                 }
                 return $container->update($this->uniqid(),$this);
             }  

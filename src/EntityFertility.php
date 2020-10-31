@@ -26,7 +26,7 @@ class EntityFertility extends Entity{
      *
      * @var string
      */
-    protected $node;
+    protected $note;
 
     /**
      * 
@@ -64,7 +64,7 @@ class EntityFertility extends Entity{
         return array_merge([
             self::NAME => $this->getName(),
             self::STATUS => $this->getStatus(),
-            self::NOTE => $this->getNode(),
+            self::NOTE => $this->getNote(),
             self::CHILDRENS => $this->getChildrens(),
             self::PARENT => $this->getParent(),
             self::REF => $this->getRef(),
@@ -77,7 +77,7 @@ class EntityFertility extends Entity{
         parent::__arrayTo($array);
         $this->setName(@$array[self::NAME]);
         $this->setStatus(@$array[self::STATUS]);
-        $this->setNode(@$array[self::NOTE]);
+        $this->setNote(@$array[self::NOTE]);
         $this->setChildrens(@$array[self::CHILDRENS]);
         $this->setParent(@$array[self::PARENT]);
         $this->setRef(@$array[self::REF]);
@@ -247,26 +247,27 @@ class EntityFertility extends Entity{
         return $this;
     }
 
+
     /**
-     * Get the value of node
+     * Get the value of note
      *
      * @return  string
      */ 
-    public function getNode()
+    public function getNote()
     {
-        return $this->node;
+        return $this->note;
     }
 
     /**
-     * Set the value of node
+     * Set the value of note
      *
-     * @param  string  $node
+     * @param  string  $note
      *
      * @return  self
      */ 
-    public function setNode(string $node = null)
+    public function setNote(string $note = null)
     {
-        $this->node = $node;
+        $this->note = $note;
 
         return $this;
     }
