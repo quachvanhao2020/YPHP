@@ -47,7 +47,6 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
     public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
     {
         $this->setFlags($flags);
-        //$this->setStorage($input);
         if(is_array($input)) $this->__arrayTo($input);
         $this->setIteratorClass($iteratorClass);
         $this->protectedProperties = array_keys(get_object_vars($this));

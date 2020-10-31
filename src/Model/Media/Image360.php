@@ -4,6 +4,19 @@ use YPHP\Model\Media\Storage\ImageStorage;
 
 class Image360 extends ImageX{
 
+    const IMAGES = "images";
+
+    public function __toArray() {
+        return array_merge(parent::__toArray(),[
+            self::IMAGES => $this->getImages(),
+        ]);
+    }
+
+    public function __arrayTo(array $array)
+    {
+        parent::__arrayTo($array);
+        $this->setImages(@$array[self::IMAGES]);
+    }
     /**
      * 
      *
@@ -30,8 +43,10 @@ class Image360 extends ImageX{
      *
      * @return  self
      */ 
-    public function setImages(ImageStorage $images)
+    public function setImages($images)
     {
+        if($images == null || is_array($images)) $images = new ImageStorage($images);
+
         $this->images = $images;
 
         return $this;

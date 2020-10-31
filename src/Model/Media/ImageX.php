@@ -15,6 +15,12 @@ class ImageX extends Image{
         ]);
     }
 
+    public function __arrayTo(array $array)
+    {
+        parent::__arrayTo($array);
+        $this->setThumb(@$array[self::THUMB]);
+    }
+
     /**
      * Get the value of thumb
      *

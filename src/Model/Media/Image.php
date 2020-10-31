@@ -25,6 +25,16 @@ class Image extends Entity {
         ]);
     }
 
+    public function __arrayTo(array $array)
+    {
+        parent::__arrayTo($array);
+        $this->setSrc(@$array[self::SRC]);
+        $this->setAlt(@$array[self::ALT]);
+        $this->setWidth(@$array[self::WIDTH]);
+        $this->setHeight(@$array[self::HEIGHT]);
+        $this->setThumb(@$array[self::THUMB]);
+    }
+
         /**
      * 
      *

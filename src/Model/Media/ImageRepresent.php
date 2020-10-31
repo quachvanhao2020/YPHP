@@ -5,6 +5,22 @@ use YPHP\Entity;
 use YPHP\Model\Media\Storage\ImageStorage;
 
 class ImageRepresent extends Entity{
+    const LOGO = "logo";
+    const IMAGES = "images";
+
+    public function __toArray() {
+        return array_merge(parent::__toArray(),[
+            self::LOGO => $this->getLogo(),
+            self::IMAGES => $this->getImages(),
+        ]);
+    }
+
+    public function __arrayTo(array $array)
+    {
+        parent::__arrayTo($array);
+        $this->setLogo(@$array[self::LOGO]);
+        $this->setImages(@$array[self::IMAGES]);
+    }
 
     /**
      * @var Image
@@ -33,8 +49,10 @@ class ImageRepresent extends Entity{
      *
      * @return  self
      */ 
-    public function setImages(ImageStorage $images)
+    public function setImages($images = [])
     {
+        if($images == null || is_array($images)) $images = new ImageStorage($images);
+
         $this->images = $images;
 
         return $this;
