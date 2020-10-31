@@ -4,6 +4,7 @@ use YPHP\Translation;
 use YPHP\TranslationService;
 use YPHP\ArrayObject;
 use YPHP\Mapper;
+use YPHP\SEOEntity;
 
 function std($object){
     return $object->__toStd();
@@ -93,4 +94,23 @@ function array_to_object($array) {
        }
     }
     return $obj;
+}
+function search($entity,$key = "",&$result = []){
+    /** @var SEOEntity $entity */
+    if($entity instanceof Entity){
+        if(method_exists($entity,"getKeywords")){
+            $keys = $entity->getKeywords();
+            $key = array_search($key, $keys);
+            if($key!==false){
+                array_push($result,$entity);
+            }
+        }
+        $entity = arr($entity);
+    }
+    if(is_iterable($entity)){
+        foreach ($entity as $value) {
+            \search($value,$key,$result);
+        }
+    }
+    return $result;
 }
