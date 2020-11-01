@@ -1,7 +1,7 @@
 <?php
 namespace YPHP;
 
-class Attribute extends Entity{
+class Attribute extends EntityFertility{
 
     const KEY = "key";
     const VALUE = "value";
