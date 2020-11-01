@@ -3,7 +3,7 @@ namespace YPHP;
 use YPHP\SEOEntity;
 use YPHP\Storage\AttributeStorage;
 
-final class EntityFertilityFinal extends EntityFertility{
+class EntityFertilityFinal extends EntityFertility{
 
     const SEO = "seo";
     const ATTRIBUTES = "attributes";
@@ -19,7 +19,11 @@ final class EntityFertilityFinal extends EntityFertility{
     {
         parent::__arrayTo($array);
         $this->setSeo(@$array[self::SEO]);
-        $this->setAttributes(@$array[self::ATTRIBUTES]);
+        $attributes = @$array[self::ATTRIBUTES];
+        if(is_array($attributes)){
+            $attributes = \tran($attributes,AttributeStorage::class);
+        }
+        $this->setAttributes($attributes);
     }
 
     /**
