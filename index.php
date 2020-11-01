@@ -1,7 +1,7 @@
 <?php
 require_once "vendor/autoload.php";
 use YPHP\Entity;
-use YPHP\EntityFactory;
+use YPHP\Factory\EntityFactory;
 use YPHP\EntityFertility;
 use YPHP\EntityFertilityEnum;
 use YPHP\Mapper;

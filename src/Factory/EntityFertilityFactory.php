@@ -1,7 +1,14 @@
 <?php
-namespace YPHP;
+namespace YPHP\Factory;
+use YPHP\ContainerFactoryInterface;
+use YPHP\CacheInject;
+use YPHP\EntityFertility;
+use YPHP\SimpleCache;
+use YPHP\SysEntity;
+use YPHP\FilterInputInterface;
+use YPHP\SortingInputInterface;
 
-class EntityFactory implements ContainerFactoryInterface{
+class EntityFertilityFactory implements ContainerFactoryInterface{
     
     use CacheInject;
     /**
@@ -16,11 +23,14 @@ class EntityFactory implements ContainerFactoryInterface{
      */
     public function get($id){
         try {
-            return $this->getCache()->getItem($id);
+            if($this->cache instanceof SimpleCache){
+                $id = (string)new SysEntity($id,EntityFertility::class);
+            }
+            return \obj_to($this->getCache()->getItem($id),new EntityFertility());
         } catch (\Exception $ex) {
             //throw $th;
         }
-        return new Entity($id."-".uniqid());
+        return new EntityFertility($id."-".uniqid());
     }
 
             /**
@@ -56,10 +66,10 @@ class EntityFactory implements ContainerFactoryInterface{
 
     /**
      * @param string $id Identifier of the entry to look for.
-     * @param Entity $entity
+     * @param EntityFertility $entity
      * @return bool
      */
-    public function update(string $id,$entity){
+    public function update($id,$entity){
         try {
             return $this->getCache()->setItem($id,$entity);
         } catch (\Exception $ex) {

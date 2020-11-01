@@ -4,7 +4,7 @@ use YPHP\Entity;
 use YPHP\EntityFactory;
 use YPHP\EntityFertility;
 use YPHP\EntityFertilityEnum;
-use YPHP\EntityFertilityFactory;
+use YPHP\Factory\EntityFertilityFactory;
 use YPHP\ManagerFactory;
 use YPHP\Mapper;
 use YPHP\SimpleCache;
