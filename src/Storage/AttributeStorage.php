@@ -2,25 +2,25 @@
 namespace YPHP\Storage;
 
 use YPHP\ArrayObject;
-use YPHP\Storage\Iterator\EntityIterator;
-use YPHP\Entity;
+use YPHP\Storage\Iterator\AttributeIterator;
+use YPHP\Attribute;
 
-class EntityStorage extends ArrayObject{
+class AttributeStorage extends ArrayObject{
 
         /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return EntityIterator
+     * @return AttributeIterator
      */
     public function getIterator()
     {
-        return new EntityIterator($this->storage);
+        return new AttributeIterator($this->storage);
     }
 
     /**
      * Get the value of storage
      *
-     * @return  Entity[]
+     * @return  Attribute[]
      */ 
     public function getStorage()
     {
@@ -30,7 +30,7 @@ class EntityStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  Entity[]  $storage
+     * @param  Attribute[]  $storage
      *
      * @return  self
      */ 
