@@ -28,13 +28,15 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
 
     public function __arrayTo($array){
         $storage = @$array[self::STORAGE];
-        foreach ($storage as $key => $value) {
-            if(is_iterable($value)){
-                $value = \obj_to($value);
+        if(is_array($storage)){
+            foreach ($storage as $key => $value) {
+                if(is_iterable($value)){
+                    $value = \obj_to($value);
+                }
+                $storage[$key] = $value;
             }
-            $storage[$key] = $value;
+            $this->setStorage($storage);
         }
-        $this->setStorage($storage);
     }
 
     public function jsonSerialize() {

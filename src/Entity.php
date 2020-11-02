@@ -3,14 +3,11 @@ namespace YPHP;
 
 class Entity extends BaseEntity implements SerializableInterface
 {
-
     use ContainerInject;
 
-    public function uniqid($force = false){
-        //if(($this->container instanceof ManagerFactory) || $force){return $this->getClass()."-".$this->getId();}
+    public function uniqid(){
         return $this->getId();
     }
-
 
     public function __debugInfo()
     {
@@ -25,6 +22,7 @@ class Entity extends BaseEntity implements SerializableInterface
     public function jsonSerialize() {
         return $this->__toArray();
     }
+    
     public function destroy(){}
 
 }
