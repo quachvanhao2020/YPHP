@@ -5,6 +5,7 @@ use YPHP\BaseArrayObject;
 
 class ArrayObject extends BaseArrayObject implements SerializableInterface {
 
+    const STORAGE = "storage";
     /**
      * @var array
      */
@@ -20,17 +21,20 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
     }
     
     public function __toArray() {
-        return $this->getStorage();
+        return [
+            self::STORAGE => $this->getStorage(),
+        ];
     }
 
     public function __arrayTo($array){
-        foreach ($array as $key => $value) {
+        $storage = @$array[self::STORAGE];
+        foreach ($storage as $key => $value) {
             if(is_iterable($value)){
                 $value = \obj_to($value);
             }
-            $array[$key] = $value;
+            $storage[$key] = $value;
         }
-        $this->setStorage($array);
+        $this->setStorage($storage);
     }
 
     public function jsonSerialize() {
