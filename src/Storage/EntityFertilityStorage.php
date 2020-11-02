@@ -30,7 +30,7 @@ class EntityFertilityStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  EntityFertility[]  $storage
+     * @param  \YPHP\EntityFertility[]  $storage
      *
      * @return  self
      */ 

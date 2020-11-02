@@ -30,7 +30,7 @@ class VideoStorage extends ArrayObject{
                     /**
      * Set the value of storage
      *
-     * @param  Video[]  $storage
+     * @param  \YPHP\Model\Media\Video[]  $storage
      *
      * @return  self
      */ 

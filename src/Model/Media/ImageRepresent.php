@@ -5,6 +5,7 @@ use YPHP\Entity;
 use YPHP\Model\Media\Storage\ImageStorage;
 
 class ImageRepresent extends Entity{
+    
     const LOGO = "logo";
     const IMAGES = "images";
 
@@ -45,7 +46,7 @@ class ImageRepresent extends Entity{
     /**
      * Set the value of images
      *
-     * @param  ImageStorage  $images
+     * @param  \YPHP\Model\Media\Storage\ImageStorage  $images
      *
      * @return  self
      */ 

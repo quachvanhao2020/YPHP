@@ -30,7 +30,7 @@ class EntityStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  Entity[]  $storage
+     * @param  \YPHP\Entity[]  $storage
      *
      * @return  self
      */ 

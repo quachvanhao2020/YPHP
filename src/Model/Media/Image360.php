@@ -24,8 +24,6 @@ class Image360 extends ImageX{
      */
     protected $images;
 
-
-
     /**
      * Get the value of images
      *
@@ -39,7 +37,7 @@ class Image360 extends ImageX{
     /**
      * Set the value of images
      *
-     * @param  ImageStorage  $images
+     * @param  \YPHP\Model\Media\Storage\ImageStorage  $images
      *
      * @return  self
      */ 

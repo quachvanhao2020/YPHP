@@ -10,4 +10,8 @@ interface EntityInterface{
      * @return string
      */
     function getClass();
+
+    function __toArray();
+
+    function __arrayTo($array);
 }

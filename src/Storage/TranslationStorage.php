@@ -4,6 +4,7 @@ namespace YPHP\Storage;
 use YPHP\ArrayObject;
 use YPHP\Storage\Iterator\TranslationIterator;
 use YPHP\Entity;
+use YPHP\Translation;
 
 class TranslationStorage extends ArrayObject{
 
@@ -20,7 +21,7 @@ class TranslationStorage extends ArrayObject{
     /**
      * Get the value of storage
      *
-     * @return  Entity[]
+     * @return  \YPHP\Translation[]
      */ 
     public function getStorage()
     {
@@ -30,7 +31,7 @@ class TranslationStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  \UltimateModel\Model\Entity[]  $storage
+     * @param  \YPHP\Translation[]  $storage
      *
      * @return  self
      */ 

@@ -46,6 +46,11 @@ function obj_to($obj,$entity = null){
 }
 function tran($current,$target){
     $result = null;
+    if(is_object($current)){
+        if(get_class($current) == $target){
+            return $current;
+        }
+    }
     if($current instanceof Entity){
         if($target instanceof Entity && get_class($current) == get_class($target)){
             $target->__arrayTo($current->__toArray());
@@ -54,6 +59,9 @@ function tran($current,$target){
         $translation->setCurrentEntity($current);
         $result = TranslationService::getInstance()->translate($translation,null);
         return $result;
+    }
+    if(is_string($current)){
+        $current = \json_decode($current);
     }
     if(is_string($target)){
         if (class_exists($target)) {

@@ -30,7 +30,7 @@ class AttributeStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  Attribute[]  $storage
+     * @param  \YPHP\Attribute[]  $storage
      *
      * @return  self
      */ 

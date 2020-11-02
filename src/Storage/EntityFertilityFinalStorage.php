@@ -30,7 +30,7 @@ class EntityFertilityFinalStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  EntityFertilityFinal[]  $storage
+     * @param  \YPHP\EntityFertilityFinal[]  $storage
      *
      * @return  self
      */ 

@@ -30,7 +30,7 @@ class ImageRepresentStorage extends ArrayObject{
                     /**
      * Set the value of storage
      *
-     * @param  ImageRepresent[]  $storage
+     * @param  \YPHP\Model\Media\ImageRepresent[]  $storage
      *
      * @return  self
      */ 

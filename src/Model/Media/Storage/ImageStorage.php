@@ -30,7 +30,7 @@ class ImageStorage extends ArrayObject{
                     /**
      * Set the value of storage
      *
-     * @param  Image[]  $storage
+     * @param  \YPHP\Model\Media\Image[]  $storage
      *
      * @return  self
      */ 
