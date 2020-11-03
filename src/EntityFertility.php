@@ -116,13 +116,12 @@ class EntityFertility extends Entity{
     /**
      * Set the value of childrens
      *
-     * @param  EntityFertilityStorage  $childrens
+     * @param  \YPHP\Storage\EntityFertilityStorage  $childrens
      *
      * @return  self
      */ 
-    public function setChildrens($childrens = [])
+    public function setChildrens($childrens = null)
     {
-        if($childrens == null || is_array($childrens)) $childrens = new EntityFertilityStorage($childrens);
         $this->childrens = $childrens;
         return $this;
     }

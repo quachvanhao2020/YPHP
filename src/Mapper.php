@@ -39,4 +39,37 @@ class Mapper extends JsonMapper{
             return $reflectClass->newInstance();
         }
     }
+
+            /**
+     * Get the mapped class/type name for this class.
+     * Returns the incoming classname if not mapped.
+     *
+     * @param string $type   Type name to map
+     * @param mixed  $jvalue Constructor parameter (the json value)
+     *
+     * @return string The mapped type/class name
+     */
+    protected function getMappedType($type, $jvalue = null)
+    {
+        $class = @$jvalue->__class;
+        if($class) $type = $class;
+        if (isset($this->classMap[$type])) {
+            $target = $this->classMap[$type];
+        } else if (is_string($type) && $type !== '' && $type[0] == '\\'
+            && isset($this->classMap[substr($type, 1)])
+        ) {
+            $target = $this->classMap[substr($type, 1)];
+        } else {
+            $target = null;
+        }
+
+        if ($target) {
+            if (is_callable($target)) {
+                $type = $target($type, $jvalue);
+            } else {
+                $type = $target;
+            }
+        }
+        return $type;
+    }
 }

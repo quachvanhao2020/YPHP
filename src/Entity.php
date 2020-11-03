@@ -6,7 +6,11 @@ class Entity extends BaseEntity implements SerializableInterface
     use ContainerInject;
 
     public function uniqid(){
-        return $this->getId();
+        $id = $this->getId();
+        if(!$id){
+            $id = uniqid();
+        }
+        return $id;
     }
 
     public function __debugInfo()
