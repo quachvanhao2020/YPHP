@@ -4,17 +4,6 @@ use YPHP\SysEntity;
 
 class ManagerFactory implements ContainerFactoryInterface{
 
-    private static $instance = null;
-
-    public static function getInstance()
-    {
-        if (self::$instance == null)
-        {
-            self::$instance = (new self());
-        }
-        return self::$instance;
-    }
-
     /**
      * 
      *
@@ -79,7 +68,7 @@ class ManagerFactory implements ContainerFactoryInterface{
             $value = $this->mapEntity[$id];
             return $value;
         }
-        $fa = $this->getMap()[$sid->getClass()];
+        $fa = @$this->getMap()[$sid->getClass()];
         if(is_string($fa)){
             $fa = new $fa();
         }

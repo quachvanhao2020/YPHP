@@ -3,6 +3,10 @@ namespace YPHP;
 use YPHP\StorageInterface;
 
 trait CacheInject{
+            /**
+     * @var bool
+     */
+    protected $force = false;
     /**
      * @var StorageInterface
      */
@@ -32,6 +36,30 @@ trait CacheInject{
     public function setCache(StorageInterface $cache)
     {
         $this->cache = $cache;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of force
+     *
+     * @return  bool
+     */ 
+    public function getForce()
+    {
+        return $this->force;
+    }
+
+    /**
+     * Set the value of force
+     *
+     * @param  bool  $force
+     *
+     * @return  self
+     */ 
+    public function setForce(bool $force)
+    {
+        $this->force = $force;
 
         return $this;
     }

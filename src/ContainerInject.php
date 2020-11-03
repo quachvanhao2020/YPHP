@@ -56,7 +56,7 @@ trait ContainerInject{
             }
             if($entity instanceof Entity && get_class($entity) == self::theClass()){
                 if($this instanceof Entity){
-                    \tran($entity,$this);
+                    \tran($entity->__toArray(),$this);
                 }
             }
         }
