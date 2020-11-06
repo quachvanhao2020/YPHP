@@ -51,6 +51,11 @@ function tran($current,$target){
             return $current;
         }
     }
+    if(is_string($current)){
+        $translation = new Translation($current,$target);
+        $result = TranslationService::getInstance()->translate($translation,null);
+        if($result) return $result;
+    }
     if($current instanceof Entity){
         if($target instanceof Entity && get_class($current) == get_class($target)){
             $target->__arrayTo($current->__toArray());

@@ -23,7 +23,7 @@ class Translation extends Entity{
      */
     protected $callable;
 
-    public function __construct(string $current,string $target,callable $callable = null)
+    public function __construct(string $current = null,string $target,callable $callable = null)
     {
         $this->current = $current;
         $this->target = $target;
