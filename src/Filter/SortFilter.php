@@ -1,6 +1,5 @@
 <?php
 namespace YPHP\Filter;
-
 use YPHP\SortingInputInterface;
 use ArrayAccess;
 
