@@ -35,8 +35,9 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
                 }
                 $storage[$key] = $value;
             }
-            $this->setStorage($storage);
+            return $this->setStorage($storage);
         }
+        $this->setStorage($array);
     }
 
     public function jsonSerialize() {

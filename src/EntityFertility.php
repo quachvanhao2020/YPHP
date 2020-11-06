@@ -5,35 +5,11 @@ use YPHP\Storage\EntityStorage;
 use YPHP\Storage\EntityFertilityStorage;
 use DateTime;
 
-class EntityFertility extends Entity{
-    const NAME = "name";
-    const STATUS = "status";
+class EntityFertility extends EntityLife{
     const PARENT = "parent";
     const CHILDRENS = "childrens";
-    const DATECREATED = "dateCreated";
     const REF = "ref";
-    const NOTE = "note";
 
-        /**
-     * 
-     *
-     * @var string
-     */
-    protected $name;
-
-            /**
-     * 
-     *
-     * @var string
-     */
-    protected $note;
-
-    /**
-     * 
-     *
-     * @var EntityStatus
-     */
-    protected $status;
     /**
      * 
      *
@@ -53,43 +29,22 @@ class EntityFertility extends Entity{
      */
     protected $childrens;
 
-    /**
-     * 
-     *
-     * @var DateTime
-     */
-    protected $dateCreated;
+
 
     public function __toArray(){
         return array_merge([
-            self::NAME => $this->getName(),
-            self::STATUS => $this->getStatus(),
-            self::NOTE => $this->getNote(),
             self::CHILDRENS => $this->getChildrens(),
             self::PARENT => $this->getParent(),
             self::REF => $this->getRef(),
-            self::DATECREATED => $this->getDateCreated(),
         ],parent::__toArray());
     }
 
     public function __arrayTo($array)
     {
         parent::__arrayTo($array);
-        $this->setName(@$array[self::NAME]);
-        $this->setStatus(@$array[self::STATUS]);
-        $this->setNote(@$array[self::NOTE]);
         $this->setChildrens(@$array[self::CHILDRENS]);
         $this->setParent(@$array[self::PARENT]);
         $this->setRef(@$array[self::REF]);
-        $dateCreated = @$array[self::DATECREATED];
-        if($dateCreated instanceof \DateTime){
-            
-        }else if(is_string($dateCreated)){
-            $dateCreated = @\DateTime::createFromFormat('Y-m-d H:i:s',$dateCreated);
-        }else if(is_array($dateCreated)){
-            $dateCreated = @new \DateTime($dateCreated["date"]);
-        }
-        $this->setDateCreated($dateCreated);
     }
 
     public function jsonSerialize() {
@@ -174,100 +129,4 @@ class EntityFertility extends Entity{
         return $this;
     }
 
-    /**
-     * Get the value of dateCreated
-     *
-     * @return  DateTime
-     */ 
-    public function getDateCreated()
-    {
-        return $this->dateCreated;
-    }
-
-    /**
-     * Set the value of dateCreated
-     *
-     * @param  DateTime  $dateCreated
-     *
-     * @return  self
-     */ 
-    public function setDateCreated(DateTime $dateCreated = null)
-    {
-        $this->dateCreated = $dateCreated;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of name
-     *
-     * @return  string
-     */ 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set the value of name
-     *
-     * @param  string  $name
-     *
-     * @return  self
-     */ 
-    public function setName(string $name = null)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of status
-     *
-     * @return  string
-     */ 
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set the value of status
-     *
-     * @param  string  $status
-     *
-     * @return  self
-     */ 
-    public function setStatus(string $status = null)
-    {
-        if(!EntityStatus::isValidValue($status)) $status = EntityStatus::VIRUS;
-        $this->status = $status;
-        return $this;
-    }
-
-
-    /**
-     * Get the value of note
-     *
-     * @return  string
-     */ 
-    public function getNote()
-    {
-        return $this->note;
-    }
-
-    /**
-     * Set the value of note
-     *
-     * @param  string  $note
-     *
-     * @return  self
-     */ 
-    public function setNote(string $note = null)
-    {
-        $this->note = $note;
-
-        return $this;
-    }
 }
