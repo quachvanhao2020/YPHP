@@ -1,24 +1,15 @@
 <?php
 
-use YPHP\EntityStatistical;
-use YPHP\Filter\StatisticalFilter;
-use YPHP\Storage\EntityStatisticalStorage;
+use YPHP\EntityFertility;
+use YPHP\EntityStatusEnum;
 
 require_once "vendor/autoload.php";
 
-$d = new DateTime('2011-01-01');
-$d1 = new DateTime('2011-01-03');
+$entity = new EntityFertility("22");
+$entity->setDateCreated(new DateTime("2020-11-06 12:00:00.000000"));
+$entity->setStatus(EntityStatusEnum::FREEZE);
+$json = json_encode($entity,JSON_PRETTY_PRINT);
 
-$s = new EntityStatisticalStorage([
-    (new EntityStatistical())->setDateCreated($d),
-    (new EntityStatistical())->setDateCreated($d1),
-]);
+$entity = \tran($json,EntityFertility::class); 
 
-$filter = new StatisticalFilter;
-$filter->setDateStart($d);
-$dd = clone $d;
-//$filter->setDateEnd($dd->modify("+1 day"));
-
-$filter->filter($s);
-
-var_dump($s);
+var_dump($json);var_dump($entity);

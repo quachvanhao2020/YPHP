@@ -46,11 +46,11 @@ class ImageRepresent extends Entity{
     /**
      * Set the value of images
      *
-     * @param  \YPHP\Model\Media\Storage\ImageStorage  $images
+     * @param  ImageStorage  $images
      *
      * @return  self
      */ 
-    public function setImages($images = [])
+    public function setImages(ImageStorage $images = null)
     {
         if($images == null || is_array($images)) $images = new ImageStorage($images);
 

@@ -3,15 +3,16 @@ namespace YPHP;
 
 use YPHP\Entity;
 use DateTime;
-use YPHP\EntityFertilityEnum as EntityStatus;
+use YPHP\EntityStatusEnum as EntityStatus;
 
 class EntityLife extends Entity{
     const NAME = "name";
     const STATUS = "status";
     const DATECREATED = "dateCreated";
     const NOTE = "note";
+    const REF = "ref";
 
-            /**
+    /**
      * 
      *
      * @var string
@@ -39,12 +40,20 @@ class EntityLife extends Entity{
      */
     protected $dateCreated;
 
+        /**
+     * 
+     *
+     * @var string
+     */
+    protected $ref;
+
     public function __toArray(){
         return array_merge([
             self::NAME => $this->getName(),
             self::STATUS => $this->getStatus(),
             self::NOTE => $this->getNote(),
             self::DATECREATED => $this->getDateCreated(),
+            self::REF => $this->getRef(),
         ],parent::__toArray());
     }
 
@@ -54,6 +63,7 @@ class EntityLife extends Entity{
         $this->setName(@$array[self::NAME]);
         $this->setStatus(@$array[self::STATUS]);
         $this->setNote(@$array[self::NOTE]);
+        $this->setRef(@$array[self::REF]);
         $dateCreated = @$array[self::DATECREATED];
         if($dateCreated instanceof \DateTime){
             
@@ -158,6 +168,30 @@ class EntityLife extends Entity{
     public function setNote(string $note = null)
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ref
+     *
+     * @return  string
+     */ 
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * Set the value of ref
+     *
+     * @param  string  $ref
+     *
+     * @return  self
+     */ 
+    public function setRef(string $ref)
+    {
+        $this->ref = $ref;
 
         return $this;
     }

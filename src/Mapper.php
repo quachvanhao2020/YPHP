@@ -1,7 +1,18 @@
 <?php
 namespace YPHP;
+
+use DateTime;
+use DateTimeZone;
 use JsonMapper;
+use ReflectionProperty;
+use ReflectionMethod;
+
 class Mapper extends JsonMapper{
+
+    /**
+     * @var callable
+     */
+    public $setPropertyCallable;
 
     public function __construct()
     {
@@ -9,6 +20,53 @@ class Mapper extends JsonMapper{
         $this->bExceptionOnMissingData = false;
         $this->bRemoveUndefinedAttributes = true;
         $this->bExceptionOnUndefinedProperty = false;
+        $this->setPropertyCallable = function(&$object,$accessor,&$value){
+            if($object instanceof DateTime){
+                if($accessor instanceof ReflectionMethod){
+                    $name = $accessor->getName();
+                    if($name == "setTimezone"){
+                        $value = new DateTimeZone($value);
+                    }else if($name == "setDate"){
+                        $object->modify($value);
+                        return false;
+                    }
+                }
+            }else{
+            }
+            return true;
+        };
+    }
+
+        /**
+     * Set a property on a given object to a given value.
+     *
+     * Checks if the setter or the property are public are made before
+     * calling this method.
+     *
+     * @param object $object   Object to set property on
+     * @param object $accessor ReflectionMethod or ReflectionProperty
+     * @param mixed  $value    Value of property
+     *
+     * @return void
+     */
+    protected function setProperty(
+        $object, $accessor, $value
+    ) {
+        if (!$accessor->isPublic() && $this->bIgnoreVisibility) {
+            $accessor->setAccessible(true);
+        }
+        $setPropertyCallable = $this->setPropertyCallable;
+        if(is_callable($setPropertyCallable)){
+            if($setPropertyCallable($object,$accessor,$value) == false){
+                return;
+            }
+        }
+        if ($accessor instanceof ReflectionProperty) {
+            $accessor->setValue($object, $value);
+        } else {
+            //setter method
+            $accessor->invoke($object, $value);
+        }
     }
 
     /**
@@ -51,6 +109,7 @@ class Mapper extends JsonMapper{
      */
     protected function getMappedType($type, $jvalue = null)
     {
+
         $class = @$jvalue->__class;
         if($class) $type = $class;
         if (isset($this->classMap[$type])) {
@@ -62,7 +121,6 @@ class Mapper extends JsonMapper{
         } else {
             $target = null;
         }
-
         if ($target) {
             if (is_callable($target)) {
                 $type = $target($type, $jvalue);

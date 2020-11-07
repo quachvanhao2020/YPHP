@@ -1,10 +1,15 @@
 <?php
 namespace YPHP;
-
 use Traversable;
 
 interface StorageInterface
 {
+        /**
+     * Get keys
+     *
+     * @return string[]
+     */
+    public function getKeys();
     /**
      * Set options.
      *

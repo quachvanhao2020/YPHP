@@ -8,14 +8,7 @@ use DateTime;
 class EntityFertility extends EntityLife{
     const PARENT = "parent";
     const CHILDRENS = "childrens";
-    const REF = "ref";
 
-    /**
-     * 
-     *
-     * @var string
-     */
-    protected $ref;
     /**
      * 
      *
@@ -29,13 +22,10 @@ class EntityFertility extends EntityLife{
      */
     protected $childrens;
 
-
-
     public function __toArray(){
         return array_merge([
             self::CHILDRENS => $this->getChildrens(),
             self::PARENT => $this->getParent(),
-            self::REF => $this->getRef(),
         ],parent::__toArray());
     }
 
@@ -44,7 +34,6 @@ class EntityFertility extends EntityLife{
         parent::__arrayTo($array);
         $this->setChildrens(@$array[self::CHILDRENS]);
         $this->setParent(@$array[self::PARENT]);
-        $this->setRef(@$array[self::REF]);
     }
 
     public function jsonSerialize() {
@@ -101,30 +90,6 @@ class EntityFertility extends EntityLife{
     public function setParent($parent = null)
     {
         $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of ref
-     *
-     * @return  string
-     */ 
-    public function getRef()
-    {
-        return $this->ref;
-    }
-
-    /**
-     * Set the value of ref
-     *
-     * @param  string  $ref
-     *
-     * @return  self
-     */ 
-    public function setRef(string $ref = null)
-    {
-        $this->ref = $ref;
 
         return $this;
     }
