@@ -18,7 +18,7 @@ abstract class BaseEntity implements EntityInterface{
      */
     protected $class;
 
-    public function __construct($id = null)
+    public function __construct(string $id = null)
     {
         $this->setId($id);
         $this->class = get_class($this);
@@ -55,6 +55,7 @@ abstract class BaseEntity implements EntityInterface{
      */ 
     public function getClass()
     {
+        if(!$this->class) $this->class = get_class($this);
         return $this->class;
     }
 
@@ -65,7 +66,7 @@ abstract class BaseEntity implements EntityInterface{
      *
      * @return  self
      */ 
-    public function setClass(string $class = "")
+    public function setClass(string $class = null)
     {
         $this->class = $class;
 
