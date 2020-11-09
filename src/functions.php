@@ -5,7 +5,7 @@ use YPHP\TranslationService;
 use YPHP\ArrayObject;
 use YPHP\Mapper;
 use YPHP\SEOEntity;
-
+use YPHP\EntityFertility;
 
 function std($object){
     return $object->__toStd();
@@ -45,7 +45,60 @@ function obj_to($obj,$entity = null){
     }
     return $entity;
 }
-function tran($current,$target){
+function tran($current,$target = null,$value = null){
+    $result = null;
+    if(!$value) $value = $current;
+    if(is_object($current)){
+        if(get_class($current) == $target){
+            return $current;
+        }
+    }
+    if($target){
+        if($current instanceof Entity){
+            if($target instanceof Entity && get_class($current) == get_class($target)){
+                $target->__arrayTo($current->__toArray());
+            }
+            $translation = new Translation(get_class($current),$target);
+            $translation->setCurrentEntity($value);
+            $result = TranslationService::getInstance()->translate($translation,null);
+            return $result;
+        }
+        $translation = new Translation(gettype($current),$target);
+        $translation->setCurrentEntity($value);
+        $result = TranslationService::getInstance()->translate($translation,null);
+        if($result) return $result;
+        if(is_string($current)){
+            $translation = new Translation($current,$target);
+            $translation->setCurrentEntity($value);
+            $result = TranslationService::getInstance()->translate($translation,null);
+            if($result) return $result;
+        }
+    }
+    if(is_string($current)){
+        $current = \json_decode($current);
+    }
+    if(is_array($current)){
+        $current = \array_to_object($current);
+    }
+    if($current instanceof \stdClass){
+        if($target == null){
+            if(isset($current->__class)){
+                $target = $current->__class;
+            }else{
+                $target = \stdClass::class;
+            }
+        }
+        if(is_string($target)){
+            if (class_exists($target)) {
+                $target = new $target(); 
+            }else return;
+        }
+        $map = new Mapper();
+        $result = $map->map($current,$target);
+    }
+    return $result;
+}
+function old_tran($current,$target){
     $result = null;
     if(is_object($current)){
         if(get_class($current) == $target){
@@ -161,4 +214,20 @@ function time_elapsed_string($datetime,$full = false,$locate = "en_GB") {
     if (!$full) $string = array_slice($string, 0, 1);
     return ($string ? implode(', ', $string) . ' <tran>ago' : '<tran>just_now')."</tran>";
     return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+function iterable_walk_recursive(iterable $iterable,callable $callable){
+    foreach ($iterable as $key => $value) {
+        $callable($key,$value);
+        if(is_iterable($value)){
+            iterable_walk_recursive($value,$callable);
+        }
+    }
+}
+function blobParentEntity($entity,callable $callable){
+    $callable($entity);
+    if($entity instanceof EntityFertility){
+        if($entity->getParent() instanceof Entity){
+            blobParentEntity($entity->getParent(),$callable);
+        }
+    }
 }

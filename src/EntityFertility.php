@@ -5,10 +5,13 @@ use YPHP\Storage\EntityStorage;
 use YPHP\Storage\EntityFertilityStorage;
 use DateTime;
 
-class EntityFertility extends EntityLife{
+class EntityFertility extends EntityLife implements \IteratorAggregate{
     const PARENT = "parent";
     const CHILDRENS = "childrens";
 
+    public function getIterator() {
+        return $this->getChildrens();
+    }
     /**
      * 
      *
@@ -54,6 +57,7 @@ class EntityFertility extends EntityLife{
      */ 
     public function getChildrens()
     {
+        if(!$this->childrens) $this->childrens = new EntityStorage();
         return $this->childrens;
     }
 
@@ -66,6 +70,13 @@ class EntityFertility extends EntityLife{
      */ 
     public function setChildrens($childrens = null)
     {
+        if(is_iterable($childrens)){
+            foreach ($childrens as $key => $value) {
+                if($value instanceof EntityFertility){
+                    $value->setParent($this);
+                }
+            }
+        }
         $this->childrens = $childrens;
         return $this;
     }

@@ -23,17 +23,17 @@ class EntityStatistical extends EntityLife implements AwareDateTimeInterface{
     /**
      * @var int
      */
-    protected $totalCreated;
+    protected $totalCreated = 0;
 
     /**
      * @var int
      */
-    protected $totalChanged;
+    protected $totalChanged = 0;
 
     /**
      * @var int
      */
-    protected $totalDeleted;
+    protected $totalDeleted = 0;
 
 
     /**

@@ -14,6 +14,7 @@
             "YPHP\\": "src/"
         },
         "files": [
+            "src/define.php",
             "src/functions.php",
             "src/awake.php"
         ]

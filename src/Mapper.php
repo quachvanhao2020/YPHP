@@ -37,6 +37,21 @@ class Mapper extends JsonMapper{
         };
     }
 
+            /**
+     * Map data all data in $json into the given $object instance.
+     *
+     * @param object|array $json   JSON object structure from json_decode()
+     * @param object       $object Object to map $json data into
+     *
+     * @return mixed Mapped object is returned.
+     * @see    mapArray()
+     */
+    public function map($json, $object)
+    {
+        if(!$json || !$object) return;
+        return parent::map($json,$object);
+    }
+
         /**
      * Set a property on a given object to a given value.
      *
@@ -85,16 +100,23 @@ class Mapper extends JsonMapper{
         $class, $useParameter = false, $jvalue = null
     ) {
         if ($useParameter) {
-            return new $class($jvalue);
-        } else {
-            $reflectClass = new \ReflectionClass($class);
-            $constructor  = $reflectClass->getConstructor();
-            if (null === $constructor
-                || $constructor->getNumberOfRequiredParameters() > 0
-            ) {
-                return $reflectClass->newInstanceWithoutConstructor();
+            try {
+                return new $class($jvalue);
+            } catch (\Throwable $th) {        
             }
-            return $reflectClass->newInstance();
+        } else {
+            try {
+                $reflectClass = new \ReflectionClass($class);
+                $constructor  = $reflectClass->getConstructor();
+                if (null === $constructor
+                    || $constructor->getNumberOfRequiredParameters() > 0
+                ) {
+                    return $reflectClass->newInstanceWithoutConstructor();
+                }
+                return $reflectClass->newInstance();
+            } catch (\Throwable $th) {
+                return null;
+            }
         }
     }
 

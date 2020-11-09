@@ -23,7 +23,7 @@ class Translation extends Entity{
      */
     protected $callable;
 
-    public function __construct(string $current = null,string $target,callable $callable = null)
+    public function __construct(string $current = null,string $target = null,callable $callable = null)
     {
         $this->current = $current;
         $this->target = $target;
@@ -97,7 +97,7 @@ class Translation extends Entity{
      *
      * @return  self
      */ 
-    public function setCurrentEntity(Entity $currentEntity)
+    public function setCurrentEntity($currentEntity)
     {
         $this->currentEntity = $currentEntity;
 

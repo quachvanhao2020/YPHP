@@ -3,6 +3,12 @@ namespace YPHP;
 
 class SERVER{
 
+    public static function ROOT_URL(string $append = null){
+        $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+        if($append) return $root.$append;
+        return $root;
+    }
+
     public static function FILES_UPLOAD(){
 
         $files = $_FILES;

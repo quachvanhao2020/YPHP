@@ -18,8 +18,10 @@ class TranslationService{
         try {
             /** @var Translation */
             $translation = $this->getTranslations()[$translationFlag->getId()];
-            $result = $translation->getCallable()($translationFlag->getCurrentEntity(),$result);
-            return $result;
+            if($translation){
+                $result = $translation->getCallable()($translationFlag->getCurrentEntity(),$result);
+                return $result;
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
