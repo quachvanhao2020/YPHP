@@ -126,7 +126,7 @@ class EntityLife extends Entity{
     /**
      * Get the value of status
      *
-     * @return  string
+     * @return  EntityStatus
      */ 
     public function getStatus()
     {
@@ -136,13 +136,12 @@ class EntityLife extends Entity{
     /**
      * Set the value of status
      *
-     * @param  string  $status
+     * @param  EntityStatus  $status
      *
      * @return  self
      */ 
-    public function setStatus(string $status = null)
+    public function setStatus($status = null)
     {
-        if(!EntityStatus::isValidValue($status)) $status = EntityStatus::VIRUS;
         $this->status = $status;
         return $this;
     }

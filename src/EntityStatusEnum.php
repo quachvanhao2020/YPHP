@@ -1,7 +1,7 @@
 <?php
 namespace YPHP;
 
-abstract class EntityStatusEnum extends BaseEnum{
+class EntityStatusEnum extends Enum{
     const ACTIVE = "ACTIVE";
     const FREEZE = "FREEZE";
     const VIRUS = "VIRUS";
