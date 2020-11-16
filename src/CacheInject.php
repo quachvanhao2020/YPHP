@@ -33,7 +33,7 @@ trait CacheInject{
      *
      * @return  self
      */ 
-    public function setCache(StorageInterface $cache)
+    public function setCache(StorageInterface $cache = null)
     {
         $this->cache = $cache;
 
@@ -47,6 +47,7 @@ trait CacheInject{
      */ 
     public function getForce()
     {
+        if(!$this->force) $this->force = false;
         return $this->force;
     }
 
@@ -57,7 +58,7 @@ trait CacheInject{
      *
      * @return  self
      */ 
-    public function setForce(bool $force)
+    public function setForce(bool $force = null)
     {
         $this->force = $force;
 

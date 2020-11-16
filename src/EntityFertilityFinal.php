@@ -42,6 +42,7 @@ class EntityFertilityFinal extends EntityFertility{
      */ 
     public function getAttributes()
     {
+        if(!$this->attributes) $this->attributes = new AttributeStorage();
         return $this->attributes;
     }
 
@@ -66,6 +67,7 @@ class EntityFertilityFinal extends EntityFertility{
      */ 
     public function getSeo()
     {
+        if(!$this->seo) $this->seo = new SEOEntity();
         return $this->seo;
     }
 

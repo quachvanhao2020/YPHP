@@ -23,7 +23,7 @@ class Enum extends BaseEnum implements \JsonSerializable {
 
     public function __toString()
     {
-        return $this->value;
+        return $this->getValue();
     }
 
     public function __construct(string $value = null)

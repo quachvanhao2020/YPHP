@@ -56,7 +56,7 @@ class Attribute extends EntityFertility{
      *
      * @return  self
      */ 
-    public function setKey(string $key)
+    public function setKey(string $key = null)
     {
         $this->key = $key;
 
@@ -81,7 +81,7 @@ class Attribute extends EntityFertility{
      *
      * @return  self
      */ 
-    public function setValue(object $value = null)
+    public function setValue($value = null)
     {
         $this->value = $value;
 

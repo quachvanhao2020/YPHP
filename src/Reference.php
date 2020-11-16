@@ -50,7 +50,7 @@ class Reference extends EntityFertility{
         /**
      * Set the value of childrens
      *
-     * @param  \LaminasShare\Storage\ReferenceStorage  $childrens
+     * @param  \YPHP\Storage\ReferenceStorage  $childrens
      *
      * @return  self
      */ 
