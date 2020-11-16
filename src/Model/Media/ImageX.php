@@ -38,7 +38,7 @@ class ImageX extends Image{
      *
      * @return  self
      */ 
-    public function setThumb(Image $thumb = null)
+    public function setThumb(?Image $thumb)
     {
         $this->thumb = $thumb;
 

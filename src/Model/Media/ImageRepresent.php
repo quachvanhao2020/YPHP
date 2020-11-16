@@ -4,7 +4,7 @@ namespace YPHP\Model\Media;
 use YPHP\Entity;
 use YPHP\Model\Media\Storage\ImageStorage;
 
-class ImageRepresent extends Entity{
+class ImageRepresent extends EntityMedia{
     
     const LOGO = "logo";
     const IMAGES = "images";
@@ -40,6 +40,7 @@ class ImageRepresent extends Entity{
      */ 
     public function getImages()
     {
+        if(!$this->images) $this->images = new ImageStorage();
         return $this->images;
     }
 
@@ -50,10 +51,8 @@ class ImageRepresent extends Entity{
      *
      * @return  self
      */ 
-    public function setImages(ImageStorage $images = null)
+    public function setImages(?ImageStorage $images)
     {
-        if($images == null || is_array($images)) $images = new ImageStorage($images);
-
         $this->images = $images;
 
         return $this;
@@ -66,6 +65,7 @@ class ImageRepresent extends Entity{
      */ 
     public function getLogo()
     {
+        if(!$this->logo) $this->logo = new Image();
         return $this->logo;
     }
 
@@ -76,7 +76,7 @@ class ImageRepresent extends Entity{
      *
      * @return  self
      */ 
-    public function setLogo(Image $logo = null)
+    public function setLogo(?Image $logo)
     {
         $this->logo = $logo;
 

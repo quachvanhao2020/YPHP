@@ -30,7 +30,7 @@ class ReferenceStorage extends ArrayObject{
             /**
      * Set the value of storage
      *
-     * @param  \LaminasShare\Reference[]  $storage
+     * @param  \YPHP\Reference[]  $storage
      *
      * @return  self
      */ 

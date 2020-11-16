@@ -31,6 +31,7 @@ abstract class BaseEntity implements EntityInterface{
      */ 
     public function getId()
     {
+        if(!$this->id) $this->id = uniqid();
         return $this->id;
     }
 

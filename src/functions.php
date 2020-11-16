@@ -11,11 +11,14 @@ function std($object){
     return $object->__toStd();
 }
 function arr($object){
+    if(method_exists($object,"__toArray")){
+        return $object->__toArray();
+    }
     if($object instanceof Entity){
         $array = $object->__toArray();
         foreach ($array as $key => $value) {
             if($value instanceof ArrayObject){
-                $array[$key] = $value->__toArray();
+                //$array[$key] = $value->__toArray();
             }
         }
         return $array;
@@ -230,4 +233,55 @@ function blobParentEntity($entity,callable $callable){
             blobParentEntity($entity->getParent(),$callable);
         }
     }
+}
+function parse_form_data(&$data){
+    (array_walk_lazy($data,function($key,&$value){
+        if(is_only_number_key($value)){
+            $value = \array_values(array_merge_self($value));
+            return $value;
+        }
+    }));
+    return $data;
+}
+function array_walk_lazy(&$array,callable $callable){
+    foreach ($array as $key => &$value) {
+        if(is_callable($callable)){
+            $callable($key,$value);
+        }
+        if(is_array($value)){
+            \array_walk_lazy($value,$callable);
+        }
+    }
+}
+function is_only_number_key($array){
+    if(!is_array($array)) return;
+    foreach ($array as $key => $value) {
+       if(!is_numeric($key)) return false;
+    }
+    return true;
+}
+function array_merge_self(array $arr){
+    $_firstKey = null;
+    $_key = null;
+    foreach ($arr as $key => $value) {
+        $firstKey = array_key_first($value);
+        if(!$_firstKey) $_firstKey = $firstKey;
+        if($_firstKey){
+            if($firstKey == $_firstKey){
+                $_key = $key;
+            }else{
+                $arr[$_key] = array_merge($arr[$_key],$value);
+                unset($arr[$key]);
+            }
+        }
+    }
+    return $arr;
+}
+function array_map_recursive($callback, $array)
+{
+  $func = function ($item) use (&$func, &$callback) {
+    return is_array($item) ? array_map($func, $item) : call_user_func($callback, $item);
+  };
+
+  return array_map($func, $array);
 }

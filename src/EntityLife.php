@@ -82,6 +82,7 @@ class EntityLife extends Entity{
      */ 
     public function getDateCreated()
     {
+        if(!$this->dateCreated) $this->dateCreated = new DateTime();
         return $this->dateCreated;
     }
 
@@ -106,6 +107,8 @@ class EntityLife extends Entity{
      */ 
     public function getName()
     {
+        if(!$this->name) $this->name = "";
+
         return $this->name;
     }
 
@@ -154,6 +157,7 @@ class EntityLife extends Entity{
      */ 
     public function getNote()
     {
+        if(!$this->note) $this->note = "";
         return $this->note;
     }
 
@@ -178,6 +182,7 @@ class EntityLife extends Entity{
      */ 
     public function getRef()
     {
+        if(!$this->ref) $this->ref = "";
         return $this->ref;
     }
 
@@ -188,7 +193,7 @@ class EntityLife extends Entity{
      *
      * @return  self
      */ 
-    public function setRef(string $ref)
+    public function setRef(string $ref = null)
     {
         $this->ref = $ref;
 

@@ -1,9 +1,8 @@
 <?php
 namespace YPHP;
-use YPHP\EntityFertilityEnum as EntityStatus;
+
 use YPHP\Storage\EntityStorage;
-use YPHP\Storage\EntityFertilityStorage;
-use DateTime;
+use YPHP\Storage\EntityStorageInterface;
 
 class EntityFertility extends EntityLife implements \IteratorAggregate{
     const PARENT = "parent";
@@ -15,13 +14,13 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
     /**
      * 
      *
-     * @var Entity
+     * @var EntityInterface
      */
     protected $parent;
     /**
      * 
      *
-     * @var EntityStorage
+     * @var EntityStorageInterface
      */
     protected $childrens;
 
@@ -44,7 +43,7 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
         $parent = $this->getParent();
         if($parent instanceof self){
             $parent = clone $parent;
-            $parent->setChildrens([]);
+            $parent->setChildrens();
             $array[self::PARENT] = $parent;
         }
         return $array;
@@ -53,7 +52,7 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
     /**
      * Get the value of childrens
      *
-     * @return  EntityStorage
+     * @return  EntityStorageInterface
      */ 
     public function getChildrens()
     {
@@ -64,11 +63,11 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
     /**
      * Set the value of childrens
      *
-     * @param  \YPHP\Storage\EntityFertilityStorage  $childrens
+     * @param  \YPHP\Storage\EntityStorageInterface  $childrens
      *
      * @return  self
      */ 
-    public function setChildrens($childrens = null)
+    public function setChildrens(EntityStorageInterface $childrens = null)
     {
         if(is_iterable($childrens)){
             foreach ($childrens as $key => $value) {
@@ -84,7 +83,7 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
     /**
      * Get the value of parent
      *
-     * @return  Entity
+     * @return  EntityInterface
      */ 
     public function getParent()
     {
@@ -94,11 +93,11 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
     /**
      * Set the value of parent
      *
-     * @param  Entity  $parent
+     * @param  EntityInterface  $parent
      *
      * @return  self
      */ 
-    public function setParent($parent = null)
+    public function setParent(EntityInterface $parent = null)
     {
         $this->parent = $parent;
 

@@ -5,12 +5,14 @@ class Attribute extends EntityFertility{
 
     const KEY = "key";
     const VALUE = "value";
+    const STRINGVALUE = "stringValue";
 
     public function __toArray()
     {
         return array_merge(parent::__toArray(),[
             self::KEY => $this->getKey(),
             self::VALUE => $this->getValue(),
+            self::STRINGVALUE => $this->getStringValue(),
         ]);
     }
 
@@ -18,6 +20,7 @@ class Attribute extends EntityFertility{
     {
         $this->setKey(@$array[self::KEY]);
         $this->setValue(@$array[self::VALUE]);
+        $this->setStringValue(@$array[self::STRINGVALUE]);
     }
 
     /**
@@ -30,6 +33,11 @@ class Attribute extends EntityFertility{
      */
     protected $value;
 
+                /**
+     * @var string
+     */
+    protected $stringValue;
+
     /**
      * Get the value of key
      *
@@ -37,6 +45,7 @@ class Attribute extends EntityFertility{
      */ 
     public function getKey()
     {
+        if(!$this->key) $this->key = "";
         return $this->key;
     }
 
@@ -61,6 +70,7 @@ class Attribute extends EntityFertility{
      */ 
     public function getValue()
     {
+        if(!$this->value) $this->value = "";
         return $this->value;
     }
 
@@ -75,6 +85,31 @@ class Attribute extends EntityFertility{
     {
         $this->value = $value;
 
+        return $this;
+    }
+
+        /**
+     * Get the value of stringValue
+     *
+     * @return  string
+     */ 
+    public function getStringValue()
+    {
+        if(!$this->stringValue) $this->stringValue = "";
+
+        return $this->stringValue;
+    }
+
+    /**
+     * Set the value of stringValue
+     *
+     * @param  string  $stringValue
+     *
+     * @return  self
+     */ 
+    public function setStringValue(string $stringValue = null)
+    {
+        $this->stringValue = $stringValue;
         return $this;
     }
 }

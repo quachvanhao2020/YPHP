@@ -1,9 +1,8 @@
 <?php
 namespace YPHP\Model\Media;
-
 use YPHP\Entity;
 
-class Image extends Entity {
+class Image extends EntityMedia {
 
     const SRC = "src";
     const ALT = "alt";
@@ -170,6 +169,7 @@ class Image extends Entity {
      */ 
     public function getThumb()
     {
+        if(!$this->thumb) $this->thumb = new Image();
         return $this->thumb;
     }
 
@@ -180,7 +180,7 @@ class Image extends Entity {
      *
      * @return  self
      */ 
-    public function setThumb(Image $thumb = null)
+    public function setThumb(?Image $thumb)
     {
         $this->thumb = $thumb;
 
