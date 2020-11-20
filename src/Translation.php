@@ -2,6 +2,19 @@
 namespace YPHP;
 
 class Translation extends Entity{
+    const CURRENT = "current";
+    const CURRENTENTITY = "currentEntity";
+    const TARGET = "target";
+    const CALLABLE = "callable";
+
+    public function __toArray(){
+        return array_merge([
+            self::CURRENT => $this->getCurrent(),
+            self::CURRENTENTITY => $this->getCurrentEntity(),
+            self::TARGET => $this->getTarget(),
+            self::CALLABLE => $this->getCallable(),
+        ],parent::__toArray());
+    }
 
     /**
      * @var string
@@ -100,6 +113,30 @@ class Translation extends Entity{
     public function setCurrentEntity($currentEntity)
     {
         $this->currentEntity = $currentEntity;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of current
+     *
+     * @return  string
+     */ 
+    public function getCurrent()
+    {
+        return $this->current;
+    }
+
+    /**
+     * Set the value of current
+     *
+     * @param  string  $current
+     *
+     * @return  self
+     */ 
+    public function setCurrent(string $current)
+    {
+        $this->current = $current;
 
         return $this;
     }

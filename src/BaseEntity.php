@@ -2,6 +2,7 @@
 namespace YPHP;
 
 abstract class BaseEntity implements EntityInterface{
+    const __ID = "-1";
     const ID = "id";
     const __CLASS = "__class";
 
@@ -18,7 +19,7 @@ abstract class BaseEntity implements EntityInterface{
      */
     protected $class;
 
-    public function __construct(string $id = null)
+    public function __construct(string $id = self::__ID)
     {
         $this->setId($id);
         $this->class = get_class($this);
@@ -70,7 +71,6 @@ abstract class BaseEntity implements EntityInterface{
     public function setClass(string $class = null)
     {
         $this->class = $class;
-
         return $this;
     }
 

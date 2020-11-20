@@ -5,7 +5,7 @@ use YPHP\ArrayObject;
 use YPHP\Storage\Iterator\ConfigIterator;
 use YPHP\Config;
 
-class ConfigStorage extends ArrayObject{
+class ConfigStorage extends EntityStorage{
 
         /**
      * Create a new iterator from an ArrayObject instance

@@ -5,7 +5,7 @@ use YPHP\ArrayObject;
 use YPHP\Storage\Iterator\EntityLifeIterator;
 use YPHP\EntityLife;
 
-class EntityLifeStorage extends ArrayObject{
+class EntityLifeStorage extends EntityStorage{
 
         /**
      * Create a new iterator from an ArrayObject instance

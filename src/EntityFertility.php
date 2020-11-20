@@ -63,7 +63,7 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
     /**
      * Set the value of childrens
      *
-     * @param  \YPHP\Storage\EntityStorageInterface  $childrens
+     * @param  EntityStorageInterface  $childrens
      *
      * @return  self
      */ 
@@ -87,6 +87,7 @@ class EntityFertility extends EntityLife implements \IteratorAggregate{
      */ 
     public function getParent()
     {
+        if(!$this->parent) $this->parent = new Entity();
         return $this->parent;
     }
 

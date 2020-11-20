@@ -133,6 +133,7 @@ class EntityLife extends Entity{
      */ 
     public function getStatus()
     {
+        if(!$this->status) $this->status = new EntityStatus(EntityStatus::NEUTRAL);
         return $this->status;
     }
 
