@@ -21,7 +21,7 @@ class TranslationStorage extends ArrayObject{
     /**
      * Get the value of storage
      *
-     * @return  \YPHP\Translation[]
+     * @return  Translation[]
      */ 
     public function getStorage()
     {

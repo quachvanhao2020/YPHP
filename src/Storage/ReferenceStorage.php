@@ -5,7 +5,7 @@ use YPHP\ArrayObject;
 use YPHP\Storage\Iterator\ReferenceIterator;
 use YPHP\Reference;
 
-class ReferenceStorage extends ArrayObject{
+class ReferenceStorage extends EntityStorage{
 
         /**
      * Create a new iterator from an ArrayObject instance

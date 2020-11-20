@@ -5,7 +5,7 @@ use YPHP\ArrayObject;
 use YPHP\Storage\Iterator\AttributeIterator;
 use YPHP\Attribute;
 
-class AttributeStorage extends ArrayObject{
+class AttributeStorage extends EntityStorage{
 
         /**
      * Create a new iterator from an ArrayObject instance

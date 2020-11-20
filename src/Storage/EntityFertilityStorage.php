@@ -5,7 +5,7 @@ use YPHP\ArrayObject;
 use YPHP\Storage\Iterator\EntityFertilityIterator;
 use YPHP\EntityFertility;
 
-class EntityFertilityStorage extends ArrayObject{
+class EntityFertilityStorage extends EntityStorage{
 
         /**
      * Create a new iterator from an ArrayObject instance

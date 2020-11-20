@@ -66,16 +66,16 @@ function tran($current,$target = null,$value = null){
             $result = TranslationService::getInstance()->translate($translation,null);
             return $result;
         }
-        $translation = new Translation(gettype($current),$target);
-        $translation->setCurrentEntity($value);
-        $result = TranslationService::getInstance()->translate($translation,null);
-        if($result) return $result;
         if(is_string($current)){
             $translation = new Translation($current,$target);
             $translation->setCurrentEntity($value);
             $result = TranslationService::getInstance()->translate($translation,null);
             if($result) return $result;
         }
+        $translation = new Translation(gettype($current),$target);
+        $translation->setCurrentEntity($value);
+        $result = TranslationService::getInstance()->translate($translation,null);
+        if($result) return $result;
     }
     if(is_string($current)){
         $current = \json_decode($current);

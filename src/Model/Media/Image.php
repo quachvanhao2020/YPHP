@@ -169,7 +169,7 @@ class Image extends EntityMedia {
      */ 
     public function getThumb()
     {
-        if(!$this->thumb) $this->thumb = new Image();
+        //if(!$this->thumb) $this->thumb = new Image();
         return $this->thumb;
     }
 
@@ -180,7 +180,7 @@ class Image extends EntityMedia {
      *
      * @return  self
      */ 
-    public function setThumb(?Image $thumb)
+    public function setThumb(Image $thumb = null)
     {
         $this->thumb = $thumb;
 
