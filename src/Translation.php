@@ -134,7 +134,7 @@ class Translation extends Entity{
      *
      * @return  self
      */ 
-    public function setCurrent(string $current)
+    public function setCurrent($current)
     {
         $this->current = $current;
 

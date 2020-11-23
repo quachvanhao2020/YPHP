@@ -19,8 +19,9 @@ abstract class BaseEntity implements EntityInterface{
      */
     protected $class;
 
-    public function __construct(string $id = self::__ID)
+    public function __construct(string $id = null)
     {
+        if(!$id) $id = self::__ID;
         $this->setId($id);
         $this->class = get_class($this);
     }
