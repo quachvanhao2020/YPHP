@@ -1,12 +1,18 @@
 <?php
 namespace YPHP;
+
+use YPHP\Filter\AwareSEOInterface;
 use YPHP\SEOEntity;
 use YPHP\Storage\AttributeStorage;
 
-class EntityFertilityFinal extends EntityFertility{
+class EntityFertilityFinal extends EntityFertility implements AwareSEOInterface{
 
     const SEO = "seo";
     const ATTRIBUTES = "attributes";
+
+    public function getSEOEntity(){
+        return $this->getSeo();
+    }
 
     public function __toArray(){
         return array_merge([

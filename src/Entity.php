@@ -20,7 +20,7 @@ class Entity extends BaseEntity implements SerializableInterface
 
     public function __toString()
     {
-        return \json_encode($this->__toArray());
+        return (string)\json_encode($this->__toArray());
     }
 
     public function jsonSerialize() {

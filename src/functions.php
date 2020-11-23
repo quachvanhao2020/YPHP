@@ -6,6 +6,7 @@ use YPHP\ArrayObject;
 use YPHP\Mapper;
 use YPHP\SEOEntity;
 use YPHP\EntityFertility;
+use YPHP\Filter\AwareSEOInterface;
 
 function std($object){
     return $object->__toStd();
@@ -101,44 +102,6 @@ function tran($current,$target = null,$value = null){
     }
     return $result;
 }
-function old_tran($current,$target){
-    $result = null;
-    if(is_object($current)){
-        if(get_class($current) == $target){
-            return $current;
-        }
-    }
-    if(is_string($current)){
-        $translation = new Translation($current,$target);
-        $result = TranslationService::getInstance()->translate($translation,null);
-        if($result) return $result;
-    }
-    if($current instanceof Entity){
-        if($target instanceof Entity && get_class($current) == get_class($target)){
-            $target->__arrayTo($current->__toArray());
-        }
-        $translation = new Translation(get_class($current),$target);
-        $translation->setCurrentEntity($current);
-        $result = TranslationService::getInstance()->translate($translation,null);
-        return $result;
-    }
-    if(is_string($current)){
-        $current = \json_decode($current);
-    }
-    if(is_string($target)){
-        if (class_exists($target)) {
-            $target = new $target(); 
-        }else return;
-    }
-    if(is_array($current)){
-        $current = \array_to_object($current);
-    }
-    if($current instanceof \stdClass){
-        $map = new Mapper();
-        $result = $map->map($current,$target);
-    }
-    return $result;
-}
 function save($entity){
     if($entity instanceof Entity){
         return $entity->save();
@@ -170,6 +133,13 @@ function search($entity,$key = "",&$result = []){
     if($entity instanceof Entity){
         if(method_exists($entity,"getKeywords")){
             $keys = $entity->getKeywords();
+            $key = array_search($key, $keys);
+            if($key!==false){
+                array_push($result,$entity);
+            }
+        }
+        if($entity instanceof AwareSEOInterface){
+            $keys = $entity->getSEOEntity()->getKeywords();
             $key = array_search($key, $keys);
             if($key!==false){
                 array_push($result,$entity);

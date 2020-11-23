@@ -6,6 +6,7 @@ use YPHP\BaseArrayObject;
 class ArrayObject extends BaseArrayObject implements SerializableInterface {
 
     const STORAGE = "storage";
+    const __CLASS = "__class";
     /**
      * @var array
      */
@@ -23,6 +24,7 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
     public function __toArray() {
         return [
             self::STORAGE => $this->getStorage(),
+            self::__CLASS => get_class($this),
         ];
     }
 

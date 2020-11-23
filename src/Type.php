@@ -1,6 +1,6 @@
 <?php
 namespace YPHP;
-use YPHP\BaseEnum;
+
 class Type extends Enum{
     const ARRAY = "array";
     const NONE = "none";
@@ -8,5 +8,6 @@ class Type extends Enum{
     const BOOL = "bool";
     const BOOLEAN = "boolean";
     const INT = "int";
+    const INTEGER = "integer";
     const OBJECT = "object";
 }
