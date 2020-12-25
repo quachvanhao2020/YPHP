@@ -10,24 +10,23 @@ abstract class BaseEntity implements EntityInterface{
 
     /**
      * 
-     * @ORM\Id
      * @ORM\Column(type="string",name="id")
-     * @ORM\GeneratedValue(strategy="CUSTOM")
-     * @ORM\CustomIdGenerator(class="Doctrine\ORM\Id\UuidGenerator")
      * @var string
      */
     protected $id;
     /**
      * 
      *
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $class;
 
     public function __construct(string $id = null)
     {
-        if(!$id) $id = self::__ID;
+        //if(!$id) $id = self::__ID;
         $this->setId($id);
+        $this->getId();
         $this->class = get_class($this);
     }
 

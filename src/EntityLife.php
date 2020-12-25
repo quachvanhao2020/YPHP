@@ -15,35 +15,35 @@ class EntityLife extends Entity{
 
     /**
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $name;
 
     /**
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $note;
 
     /**
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      * @var EntityStatus
      */
     protected $status;
 
     /**
      * 
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      * @var DateTime
      */
     protected $dateCreated;
 
     /**
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $ref;

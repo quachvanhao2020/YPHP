@@ -12,7 +12,8 @@
     "autoload": {
         "psr-4": {
             "YPHP\\": "src/",
-            "Doctrine\\": "src/"
+            "Doctrine\\": "Doctrine/",
+            "Laminas\\": "Laminas/"
         },
         "files": [
             "src/define.php",
