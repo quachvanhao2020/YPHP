@@ -4,6 +4,7 @@ namespace YPHP;
 use YPHP\Entity;
 use DateTime;
 use YPHP\EntityStatusEnum as EntityStatus;
+use Doctrine\ORM\Mapping as ORM;
 
 class EntityLife extends Entity{
     const NAME = "name";
@@ -14,35 +15,35 @@ class EntityLife extends Entity{
 
     /**
      * 
-     *
+     * @ORM\Column(type="string")
      * @var string
      */
     protected $name;
 
-            /**
+    /**
      * 
-     *
+     * @ORM\Column(type="string")
      * @var string
      */
     protected $note;
 
-        /**
+    /**
      * 
-     *
+     * @ORM\Column(type="string")
      * @var EntityStatus
      */
     protected $status;
 
-        /**
+    /**
      * 
-     *
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     protected $dateCreated;
 
-        /**
+    /**
      * 
-     *
+     * @ORM\Column(type="string")
      * @var string
      */
     protected $ref;

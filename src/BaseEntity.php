@@ -1,5 +1,7 @@
 <?php
 namespace YPHP;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Id\UuidGenerator;
 
 abstract class BaseEntity implements EntityInterface{
     const __ID = "-1";
@@ -8,7 +10,10 @@ abstract class BaseEntity implements EntityInterface{
 
     /**
      * 
-     *
+     * @ORM\Id
+     * @ORM\Column(type="string",name="id")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Doctrine\ORM\Id\UuidGenerator")
      * @var string
      */
     protected $id;
@@ -33,7 +38,7 @@ abstract class BaseEntity implements EntityInterface{
      */ 
     public function getId()
     {
-        //if(!$this->id) $this->id = uniqid();
+        if(!$this->id) $this->id = uniqid();
         return $this->id;
     }
 
