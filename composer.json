@@ -13,7 +13,8 @@
         "psr-4": {
             "YPHP\\": "src/",
             "Doctrine\\": "Doctrine/",
-            "Laminas\\": "Laminas/"
+            "Laminas\\": "Laminas/",
+            "Symfony\\": "Symfony/"
         },
         "files": [
             "src/define.php",

@@ -255,3 +255,108 @@ function array_map_recursive($callback, $array)
 
   return array_map($func, $array);
 }
+
+function array_index_value(array $array = []){
+    $keep = [];
+    foreach ($array as $key => $value) {
+        $keys = explode(".",$key);
+        if($keys && count($keys) > 1){
+            if(count($keys) > 2){
+                $_keep = array_slice($keys, 1);
+                $_keep = implode(".",$_keep);
+                if(!isset($keep[$keys[0]])){
+                    $keep[$keys[0]] = [];
+                }
+                $keep[$keys[0]] = array_merge($keep[$keys[0]],[$_keep => $value]);
+                unset($array[$key]); 
+                continue;
+            }
+            if(!isset($array[$keys[0]])){
+                $array[$keys[0]] = [];
+            }
+            $array[$keys[0]][$keys[1]] = $value ;
+            unset($array[$key]); 
+        }
+    }
+    foreach ($keep as $key => $value) {
+        $array[$key] = array_merge($array[$key],\array_index_value($value));
+    }
+    return $array;
+}
+
+function index_value_array(array $array = [],string $flag = "."){
+    $keep = "";
+    $keepArray = [];
+    array_walk_lazy($array,function($key,$value,int $level) use(&$keep,&$keepArray){
+        array_push($keepArray,[
+            "key" => $key,
+            "value" => $value,
+            "level" => $level,
+        ]);
+    });
+    $_level = -1;
+    foreach ($keepArray as $key => $value) {
+        $level = $value["level"];
+        if($level==0){
+            $keep = "";
+        }else{
+            if($level == $_level){
+                $keep = substr($keep,0,strrpos($keep,$flag));
+            }
+        }
+        $keep = $keep.$flag.$value["key"];
+        if(!is_array($value["value"])){
+            $keep = trim($keep,$flag);
+            $keepArray[$keep] = $value["value"];
+        }
+        unset($keepArray[$key]);
+        $_level = $level;
+    }
+    return $keepArray;
+}
+
+function hydrate(array $data,object $object,\Laminas\Hydrator\HydrationInterface $hydration = null,bool $recursive = false,\Laminas\Hydrator\ExtractionInterface $extraction = null,array $strategys = [],int $depth = 512){
+    if($recursive){
+        if($depth == 0) return null;
+        $depth --; 
+        $extract = \hydrator_extract($object,$hydration,false,$strategys);
+        foreach ($data as $key => $value) {
+            $_strategys = [];
+            if($strategy = @$strategys[$key]){
+                if($hydration instanceof \Laminas\Hydrator\AbstractHydrator){
+                    $hydration->addStrategy($key,$strategy["strategy"]);
+                }
+                $_strategys = isset($strategy["children"]) ? $strategy["children"] : [];
+            }
+            if($_val = @$extract[$key]){
+                if(is_array($value) && is_object($_val)){
+                    $data[$key] = \hydrate($value,$_val,$hydration,$recursive,$extraction,$_strategys,$depth);
+                }
+            }
+        }
+    }
+    return $hydration->hydrate($data,$object);
+}
+
+function hydrator_extract(object $object,\Laminas\Hydrator\ExtractionInterface $extraction = null,bool $recursive = false,array $strategys = [],int $depth = 512){
+    foreach ($strategys as $key => $value) {
+        if($extraction instanceof \Laminas\Hydrator\AbstractHydrator){
+            $extraction->addStrategy($key,$value["strategy"]);
+        }
+    }
+    $_object = $extraction->extract($object);
+    if($recursive){
+        if($depth == 0) return $_object;
+        $depth --; 
+        foreach ($_object as $key => $value) {
+            $_strategys = [];
+            if($strategy = @$strategys[$key]){
+                $_strategys = isset($strategy["children"]) ? $strategy["children"] : [];
+            }
+            if(is_object($value)){
+                $_object[$key] = \hydrator_extract($value,$extraction,$recursive,$_strategys,$depth);
+            }
+        } 
+    }
+    return $_object;
+}
