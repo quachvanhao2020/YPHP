@@ -1,26 +1,26 @@
 <?php
-namespace YPHP\Model\Media\Storage;
+namespace YPHP\Model\Stream\Storage;
 
 use YPHP\ArrayObject;
-use YPHP\Model\Media\ImageRepresent;
-use YPHP\Model\Media\Storage\Iterator\ImageRepresentIterator;
+use YPHP\Model\Stream\Video;
+use YPHP\Model\Stream\Storage\Iterator\VideoIterator;
 
-class ImageRepresentStorage extends ArrayObject{
+class VideoStorage extends ArrayObject{
 
             /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return ImageRepresentIterator
+     * @return VideoIterator
      */
     public function getIterator()
     {
-        return new ImageRepresentIterator($this->storage);
+        return new VideoIterator($this->storage);
     }
 
     /**
      * Get the value of storage
      *
-     * @return  ImageRepresent[]
+     * @return  Video[]
      */ 
     public function getStorage()
     {
@@ -30,7 +30,7 @@ class ImageRepresentStorage extends ArrayObject{
                     /**
      * Set the value of storage
      *
-     * @param  \YPHP\Model\Media\ImageRepresent[]  $storage
+     * @param  \YPHP\Model\Stream\Video[]  $storage
      *
      * @return  self
      */ 

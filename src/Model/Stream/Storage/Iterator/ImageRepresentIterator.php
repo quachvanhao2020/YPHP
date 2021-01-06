@@ -1,8 +1,8 @@
 <?php
-namespace YPHP\Model\Media\Storage\Iterator;
+namespace YPHP\Model\Stream\Storage\Iterator;
 
 use YPHP\Iterator;
-use YPHP\Model\Media\ImageRepresent;
+use YPHP\Model\Stream\ImageRepresent;
 
 class ImageRepresentIterator extends Iterator{
 

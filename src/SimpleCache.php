@@ -3,6 +3,10 @@ namespace YPHP;
 
 class SimpleCache implements StorageInterface{
 
+    public function getKeys(){
+        return [];
+    }
+
     protected $filePath;
 
     /**

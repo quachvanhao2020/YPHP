@@ -1,9 +1,9 @@
 <?php
-namespace YPHP\Model\Media\Storage;
+namespace YPHP\Model\Stream\Storage;
 
 use YPHP\ArrayObject;
-use YPHP\Model\Media\Image;
-use YPHP\Model\Media\Storage\Iterator\ImageIterator;
+use YPHP\Model\Stream\Image;
+use YPHP\Model\Stream\Storage\Iterator\ImageIterator;
 
 class ImageStorage extends ArrayObject{
 
@@ -30,7 +30,7 @@ class ImageStorage extends ArrayObject{
                     /**
      * Set the value of storage
      *
-     * @param  \YPHP\Model\Media\Image[]  $storage
+     * @param  \YPHP\Model\Stream\Image[]  $storage
      *
      * @return  self
      */ 

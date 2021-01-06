@@ -1,8 +1,8 @@
 <?php
-namespace YPHP\Model\Media;
-use YPHP\Model\Media\Storage\ImageStorage;
+namespace YPHP\Model\Stream;
+use YPHP\Model\Stream\Storage\ImageStorage;
 
-class Image360 extends ImageX{
+class Image360 extends Image{
 
     const IMAGES = "images";
 
@@ -37,7 +37,7 @@ class Image360 extends ImageX{
     /**
      * Set the value of images
      *
-     * @param  \YPHP\Model\Media\Storage\ImageStorage  $images
+     * @param  \YPHP\Model\Stream\Storage\ImageStorage  $images
      *
      * @return  self
      */ 

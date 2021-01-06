@@ -1,15 +1,21 @@
 <?php
-namespace YPHP\Model\Media;
-use YPHP\Entity;
+namespace YPHP\Model\Stream;
+use Doctrine\ORM\Mapping as ORM;
 
-class Image extends EntityMedia {
+/** 
+ * @ORM\Entity 
+ * @ORM\Table(name="images")
+ */
+class Image extends EntityStream{
 
     const SRC = "src";
     const ALT = "alt";
     const WIDTH = "width";
     const HEIGHT = "height";
     const THUMB = "thumb";
+
     /**
+     * @ORM\ManyToOne(targetEntity="YPHP\Model\Stream\Image", inversedBy="children",cascade={"persist"})
      * @var Image
      */
     protected $thumb;
@@ -34,30 +40,31 @@ class Image extends EntityMedia {
         $this->setThumb(@$array[self::THUMB]);
     }
 
-        /**
+    /**
      * 
-     *
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $src;
 
-        /**
+    /**
      * 
-     *
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $alt;
 
-            /**
+    /**
      * 
-     *
+     * @ORM\Column(type="integer",nullable=true)
      * @var int
      */
     protected $width;
 
-                /**
+    /**
      * 
      *
+     * @ORM\Column(type="integer",nullable=true)
      * @var int
      */
     protected $height;

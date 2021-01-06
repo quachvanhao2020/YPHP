@@ -1,26 +1,26 @@
 <?php
-namespace YPHP\Model\Media\Storage;
+namespace YPHP\Model\Stream\Storage;
 
 use YPHP\ArrayObject;
-use YPHP\Model\Media\ImageX;
-use YPHP\Model\Media\Storage\Iterator\ImageXIterator;
+use YPHP\Model\Stream\ImageRepresent;
+use YPHP\Model\Stream\Storage\Iterator\ImageRepresentIterator;
 
-class ImageXStorage extends ArrayObject{
+class ImageRepresentStorage extends ArrayObject{
 
             /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return ImageXIterator
+     * @return ImageRepresentIterator
      */
     public function getIterator()
     {
-        return new ImageXIterator($this->storage);
+        return new ImageRepresentIterator($this->storage);
     }
 
     /**
      * Get the value of storage
      *
-     * @return  ImageX[]
+     * @return  ImageRepresent[]
      */ 
     public function getStorage()
     {
@@ -30,7 +30,7 @@ class ImageXStorage extends ArrayObject{
                     /**
      * Set the value of storage
      *
-     * @param  \YPHP\Model\Media\ImageX[]  $storage
+     * @param  \YPHP\Model\Stream\ImageRepresent[]  $storage
      *
      * @return  self
      */ 

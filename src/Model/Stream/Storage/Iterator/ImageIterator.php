@@ -1,8 +1,8 @@
 <?php
-namespace YPHP\Model\Media\Storage\Iterator;
+namespace YPHP\Model\Stream\Storage\Iterator;
 
 use YPHP\Iterator;
-use YPHP\Model\Media\Image;
+use YPHP\Model\Stream\Image;
 
 class ImageIterator extends Iterator{
 

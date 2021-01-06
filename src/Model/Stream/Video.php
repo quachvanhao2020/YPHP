@@ -1,25 +1,21 @@
 <?php
-namespace YPHP\Model\Media;
+namespace YPHP\Model\Stream;
+use Doctrine\ORM\Mapping as ORM;
 
-class ImageX extends Image{
+/** 
+ * @ORM\Entity 
+ * @ORM\Table(name="videos")
+ */
+class Video extends EntityStream{
 
     const THUMB = "thumb";
+
     /**
+     * @ORM\ManyToOne(targetEntity="YPHP\Model\Stream\Image", inversedBy="children",cascade={"persist"})
      * @var Image
      */
     protected $thumb;
-
-    public function __toArray() {
-        return array_merge(parent::__toArray(),[
-            self::THUMB => $this->getThumb(),
-        ]);
-    }
-
-    public function __arrayTo($array)
-    {
-        parent::__arrayTo($array);
-        $this->setThumb(@$array[self::THUMB]);
-    }
+    
 
     /**
      * Get the value of thumb
@@ -38,7 +34,7 @@ class ImageX extends Image{
      *
      * @return  self
      */ 
-    public function setThumb(?Image $thumb)
+    public function setThumb(Image $thumb = null)
     {
         $this->thumb = $thumb;
 

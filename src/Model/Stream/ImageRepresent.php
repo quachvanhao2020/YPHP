@@ -1,10 +1,10 @@
 <?php
-namespace YPHP\Model\Media;
+namespace YPHP\Model\Stream;
 
 use YPHP\Entity;
-use YPHP\Model\Media\Storage\ImageStorage;
+use YPHP\Model\Stream\Storage\ImageStorage;
 
-class ImageRepresent extends EntityMedia{
+class ImageRepresent extends EntityStream{
     
     const LOGO = "logo";
     const IMAGES = "images";
