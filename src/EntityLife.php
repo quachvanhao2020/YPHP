@@ -29,7 +29,8 @@ class EntityLife extends Entity{
 
     /**
      * 
-     * @ORM\Column(type="string",nullable=true)
+     * \@ORM\Column(type="string",nullable=true)
+     * @ORM\Embedded(class = "YPHP\EntityStatusEnum")
      * @var EntityStatus
      */
     protected $status;

@@ -1,5 +1,6 @@
 <?php
 namespace YPHP;
+use Doctrine\ORM\Mapping as ORM;
 
 class Enum extends BaseEnum implements \JsonSerializable {
 
@@ -11,6 +12,7 @@ class Enum extends BaseEnum implements \JsonSerializable {
     protected $default;
 
     /**
+     * @ORM\Column(type="string",nullable=true)
      * @var string
      */
     protected $value;

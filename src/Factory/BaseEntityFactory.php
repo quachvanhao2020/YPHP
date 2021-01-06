@@ -2,11 +2,11 @@
 namespace YPHP\Factory;
 use YPHP\ContainerFactoryInterface;
 use YPHP\CacheInject;
-use YPHP\Entity;
 use YPHP\FilterInputInterface;
 use YPHP\SortingInputInterface;
+use YPHP\EntityInterface;
 
-class EntityFactory extends BaseEntityFactory{
+abstract class BaseEntityFactory implements ContainerFactoryInterface{
     
     use CacheInject;
     /**
@@ -17,18 +17,11 @@ class EntityFactory extends BaseEntityFactory{
      * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
      * @throws ContainerExceptionInterface Error while retrieving the entry.
      *
-     * @return Entity.
+     * @return EntityInterface.
      */
-    public function get($id){
-        try {
-            return $this->getCache()->getItem($id);
-        } catch (\Exception $ex) {
-            //throw $th;
-        }
-        return new Entity($id."-".uniqid());
-    }
+    public abstract function get($id);
 
-            /**
+    /**
      * @param int $first
      * @param string $after
      * @param int $last
@@ -37,39 +30,26 @@ class EntityFactory extends BaseEntityFactory{
      * @param SortingInputInterface $sort
      * @return bool
      */
-    public function list(int $first = 0,string $after = "",int $last = -1,string $before = "",FilterInputInterface $filter = null,SortingInputInterface $sort = null){
-        return [];
-    }
+    public abstract function list(int $first = 0,string $after = "",int $last = -1,string $before = "",FilterInputInterface $filter = null,SortingInputInterface $sort = null);
 
     /**
      * @param string $id Identifier of the entry to look for.
      *
      * @return bool
      */
-    public function has($id){
-        return true;
-    }
+    public abstract function has($id);
 
         /**
      * @param string $id Identifier of the entry to look for.
      *
      * @return bool
      */
-    public function delete($id){
-        return true;
-    }
+    public abstract function delete($id);
 
     /**
      * @param string $id Identifier of the entry to look for.
-     * @param Entity $entity
+     * @param EntityInterface $entity
      * @return bool
      */
-    public function update($id,$entity){
-        try {
-            return $this->getCache()->setItem($id,$entity);
-        } catch (\Exception $ex) {
-            //throw $th;
-        }
-        return true;
-    }
+    public abstract function update($id,$entity);
 }

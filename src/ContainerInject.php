@@ -28,7 +28,7 @@ trait ContainerInject{
      *
      * @return  self
      */ 
-    public function setContainer(ContainerInterface $container)
+    public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
 

@@ -213,13 +213,15 @@ function parse_form_data(&$data){
     }));
     return $data;
 }
-function array_walk_lazy(&$array,callable $callable){
+function array_walk_lazy(&$array,callable $callable,int $level = 0){
     foreach ($array as $key => &$value) {
         if(is_callable($callable)){
-            $callable($key,$value);
+            $callable($key,$value,$level);
         }
         if(is_array($value)){
+            $level ++;
             \array_walk_lazy($value,$callable);
+            $level --;
         }
     }
 }

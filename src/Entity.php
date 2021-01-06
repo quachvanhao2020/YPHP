@@ -1,6 +1,10 @@
 <?php
 namespace YPHP;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Embeddable
+ */
 class Entity extends BaseEntity implements SerializableInterface
 {
     use ContainerInject;
