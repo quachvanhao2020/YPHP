@@ -1,5 +1,4 @@
 <?php
-use YPHP\Model\Media\EntityMedia;
 
 return [
     'doctrine' => [
@@ -72,7 +71,6 @@ return [
             'page_size' => 25,
             'page_size_param' => '50',
             'entity_class' => \YPHP\Api\V1\Rest\Stream\Entity::class,
-            'entity_class' => EntityMedia::class,
             'collection_class' => \YPHP\Api\V1\Rest\Stream\Collection::class,
             'service_name' => 'streams',
         ],
