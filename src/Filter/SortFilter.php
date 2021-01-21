@@ -2,6 +2,7 @@
 namespace YPHP\Filter;
 use YPHP\SortingInputInterface;
 use ArrayAccess;
+use YPHP\ArrayObject;
 
 class SortFilter extends EntityFilter implements SortingInputInterface
 {
@@ -71,7 +72,13 @@ class SortFilter extends EntityFilter implements SortingInputInterface
      */
     public function filter(ArrayAccess &$items)
     {
-        usort($items,[$this,"cmp"]);
+        if($items instanceof ArrayObject){
+            $storage = $items->getStorage();
+            usort($storage,[$this,"cmp"]);
+            $items->setStorage($storage);
+        }else{
+            usort($items,[$this,"cmp"]);
+        }
         return $items;
     }
 

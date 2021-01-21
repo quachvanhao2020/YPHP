@@ -1,108 +1,87 @@
 <?php
 namespace YPHP;
 
-use YPHP\Storage\EntityStorage;
-use YPHP\Storage\EntityStorageInterface;
-
-class EntityFertility extends EntityLife implements \IteratorAggregate{
+class EntityFertility extends EntityLife implements \Countable,\RecursiveIterator,\ArrayAccess{
+    use EntityRecursiveIteratorTrait;
     const PARENT = "parent";
-    const CHILDRENS = "childrens";
+    const CHILDREN = "children";
+
+    public function __construct(string $id = null)
+    {
+        parent::__construct($id);
+        $this->children = [];
+    }
+    
 
     public function getIterator() {
-        return $this->getChildrens();
+        return $this->getChildren();
     }
-    /**
-     * 
-     *
-     * @var EntityInterface
-     */
-    protected $parent;
-    /**
-     * 
-     *
-     * @var EntityStorageInterface
-     */
-    protected $childrens;
+
 
     public function __toArray(){
         return array_merge([
-            self::CHILDRENS => $this->getChildrens(),
             self::PARENT => $this->getParent(),
+            self::CHILDREN => $this->getChildren(),
         ],parent::__toArray());
     }
 
     public function __arrayTo($array)
     {
         parent::__arrayTo($array);
-        $this->setChildrens(@$array[self::CHILDRENS]);
         $this->setParent(@$array[self::PARENT]);
     }
 
-    public function jsonSerialize() {
-        $array = $this->__toArray();
-        $parent = $this->getParent();
-        if($parent instanceof self){
-            $parent = clone $parent;
-            $parent->setChildrens();
-            $array[self::PARENT] = $parent;
+        /**
+     * Returns whether the requested key exists
+     *
+     * @param  mixed $key
+     * @return bool
+     */
+    public function offsetExists($key)
+    {
+        return isset($this->children[$key]);
+    }
+
+    /**
+     * Returns the value at the specified key
+     *
+     * @param  mixed $key
+     * @return mixed
+     */
+    public function &offsetGet($key)
+    {
+        $ret = null;
+        if (! $this->offsetExists($key)) {
+            return $ret;
         }
-        return $array;
+        $ret =& $this->children[$key];
+
+        return $ret;
     }
 
     /**
-     * Get the value of childrens
+     * Sets the value at the specified key to value
      *
-     * @return  EntityStorageInterface
-     */ 
-    public function getChildrens()
+     * @param  mixed $key
+     * @param  mixed $value
+     * @return void
+     */
+    public function offsetSet($key, $value)
     {
-        if(!$this->childrens) $this->childrens = new EntityStorage();
-        return $this->childrens;
+        $this->children[$key] = $value;
     }
 
     /**
-     * Set the value of childrens
+     * Unsets the value at the specified key
      *
-     * @param  EntityStorageInterface  $childrens
-     *
-     * @return  self
-     */ 
-    public function setChildrens(EntityStorageInterface $childrens = null)
+     * @param  mixed $key
+     * @return void
+     */
+    public function offsetUnset($key)
     {
-        if(is_iterable($childrens)){
-            foreach ($childrens as $key => $value) {
-                if($value instanceof EntityFertility){
-                    $value->setParent($this);
-                }
-            }
+        if ($this->offsetExists($key)) {
+            unset($this->children[$key]);
         }
-        $this->childrens = $childrens;
-        return $this;
-    }
-
-    /**
-     * Get the value of parent
-     *
-     * @return  EntityInterface
-     */ 
-    public function getParent()
-    {
-        if(!$this->parent) $this->parent = new Entity();
-        return $this->parent;
-    }
-
-    /**
-     * Set the value of parent
-     *
-     * @param  EntityInterface  $parent
-     *
-     * @return  self
-     */ 
-    public function setParent(EntityInterface $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
     }
 
 }

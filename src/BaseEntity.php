@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class BaseEntity implements EntityInterface{
     const __ID = "_a1";
     const ID = "id";
-    const __CLASS = "__class";
+    const __CLASS = "class";
 
     /**
      * 

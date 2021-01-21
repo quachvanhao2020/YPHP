@@ -28,7 +28,6 @@ class RestApiStreamFactory extends RestApiEntityFactory{
         $dtype = "stream";
         switch (get_class($object)) {
             case EntityMedia::class:
-
                 break;
             case Image::class:
                 $dtype = "image";
@@ -42,7 +41,6 @@ class RestApiStreamFactory extends RestApiEntityFactory{
         }
         $data = parent::extract($object);
         $data["dtype"] = $dtype;
-        var_dump($data);
         return $data;
     }
 }

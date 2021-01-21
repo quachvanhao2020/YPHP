@@ -29,7 +29,7 @@ class Stream implements StreamInterface{
      * @return string
      */
     public function __toString(){
-        return $this->source;
+        return $this->getSource();
     }
 
     /**
@@ -196,6 +196,7 @@ class Stream implements StreamInterface{
      */ 
     public function getSource()
     {
+        if(!$this->source) $this->source = "";
         return $this->source;
     }
 

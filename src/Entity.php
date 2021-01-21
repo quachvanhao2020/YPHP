@@ -17,7 +17,7 @@ class Entity extends BaseEntity implements SerializableInterface
         return $id;
     }
 
-    public function __debugInfo()
+    public function ___debugInfo()
     {
         return arr($this);
     }

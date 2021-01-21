@@ -5,14 +5,14 @@ class Attribute extends EntityFertility{
 
     const KEY = "key";
     const VALUE = "value";
-    const STRINGVALUE = "stringValue";
+    const STRATEGY = "strategy";
 
     public function __toArray()
     {
         return array_merge(parent::__toArray(),[
             self::KEY => $this->getKey(),
             self::VALUE => $this->getValue(),
-            self::STRINGVALUE => $this->getStringValue(),
+            self::STRATEGY => $this->setStrategy()
         ]);
     }
 
@@ -20,7 +20,7 @@ class Attribute extends EntityFertility{
     {
         $this->setKey(@$array[self::KEY]);
         $this->setValue(@$array[self::VALUE]);
-        $this->setStringValue(@$array[self::STRINGVALUE]);
+        $this->setStrategy(@$array[self::STRATEGY]);
     }
 
     /**
@@ -33,10 +33,10 @@ class Attribute extends EntityFertility{
      */
     protected $value;
 
-                /**
+    /**
      * @var string
      */
-    protected $stringValue;
+    protected $strategy;
 
     /**
      * Get the value of key
@@ -110,6 +110,30 @@ class Attribute extends EntityFertility{
     public function setStringValue(string $stringValue = null)
     {
         $this->stringValue = $stringValue;
+        return $this;
+    }
+
+    /**
+     * Get the value of strategy
+     *
+     * @return  string
+     */ 
+    public function getStrategy()
+    {
+        return $this->strategy;
+    }
+
+    /**
+     * Set the value of strategy
+     *
+     * @param  string  $strategy
+     *
+     * @return  self
+     */ 
+    public function setStrategy(string $strategy = null)
+    {
+        $this->strategy = $strategy;
+
         return $this;
     }
 }

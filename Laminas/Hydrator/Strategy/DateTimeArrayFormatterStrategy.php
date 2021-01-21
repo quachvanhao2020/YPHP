@@ -84,6 +84,9 @@ final class DateTimeArrayFormatterStrategy implements StrategyInterface
                 is_object($value) ? get_class($value) : gettype($value)
             ));
         }
+        if(isset($value['timestamp'])){
+            return new DateTime('@'.$value['timestamp']);
+        }
         $value = new DateTime($value['date'],new DateTimeZone($value['timezone']));
         return $value;
     }

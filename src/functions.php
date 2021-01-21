@@ -216,7 +216,10 @@ function parse_form_data(&$data){
 function array_walk_lazy(&$array,callable $callable,int $level = 0){
     foreach ($array as $key => &$value) {
         if(is_callable($callable)){
-            $callable($key,$value,$level);
+            $callable($key,$value,$level,$array);
+        }
+        if(!isset($array[$key])){
+            continue;
         }
         if(is_array($value)){
             $level ++;
@@ -258,14 +261,14 @@ function array_map_recursive($callback, $array)
   return array_map($func, $array);
 }
 
-function array_index_value(array $array = []){
+function array_index_value(array $array = [],string $flag = "."){
     $keep = [];
     foreach ($array as $key => $value) {
-        $keys = explode(".",$key);
+        $keys = explode($flag,$key);
         if($keys && count($keys) > 1){
             if(count($keys) > 2){
                 $_keep = array_slice($keys, 1);
-                $_keep = implode(".",$_keep);
+                $_keep = implode($flag,$_keep);
                 if(!isset($keep[$keys[0]])){
                     $keep[$keys[0]] = [];
                 }
@@ -281,7 +284,7 @@ function array_index_value(array $array = []){
         }
     }
     foreach ($keep as $key => $value) {
-        $array[$key] = array_merge($array[$key],\array_index_value($value));
+        $array[$key] = array_merge($array[$key],\array_index_value($value,$flag));
     }
     return $array;
 }
@@ -343,7 +346,7 @@ function hydrate(array $data,object $object,\Laminas\Hydrator\HydrationInterface
 function hydrator_extract(object $object,\Laminas\Hydrator\ExtractionInterface $extraction = null,bool $recursive = false,array $strategys = [],int $depth = 512){
     foreach ($strategys as $key => $value) {
         if($extraction instanceof \Laminas\Hydrator\AbstractHydrator){
-            $extraction->addStrategy($key,$value["strategy"]);
+            isset($value["strategy"]) && $extraction->addStrategy($key,$value["strategy"]);
         }
     }
     $_object = $extraction->extract($object);

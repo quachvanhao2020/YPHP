@@ -5,10 +5,14 @@ use YPHP\CacheInject;
 use YPHP\FilterInputInterface;
 use YPHP\SortingInputInterface;
 use YPHP\EntityInterface;
+use YPHP\Entity;
+use YPHP\Storage\EntityStorage;
 
 abstract class BaseEntityFactory implements ContainerFactoryInterface{
-    
     use CacheInject;
+
+    const ENTITY = Entity::class;
+    const STORAGE = EntityStorage::class;
     /**
      * 
      *
@@ -28,7 +32,7 @@ abstract class BaseEntityFactory implements ContainerFactoryInterface{
      * @param string $before
      * @param FilterInputInterface $filter
      * @param SortingInputInterface $sort
-     * @return bool
+     * @return EntityStorage
      */
     public abstract function list(int $first = 0,string $after = "",int $last = -1,string $before = "",FilterInputInterface $filter = null,SortingInputInterface $sort = null);
 

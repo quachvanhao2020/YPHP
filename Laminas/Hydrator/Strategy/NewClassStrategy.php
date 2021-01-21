@@ -15,13 +15,21 @@ final class NewClassStrategy implements StrategyInterface
      */
     private $hydrator;
 
+        /**
+     * Format to use during hydration.
+     *
+     * @var bool
+     */
+    protected $minimum;
+
     /**
      * @param bool $dateTimeFallback try to parse with DateTime when createFromFormat fails
      * @throws Exception\InvalidArgumentException for invalid $format values
      */
-    public function __construct(AbstractHydrator $hydrator) 
+    public function __construct(AbstractHydrator $hydrator,bool $minimum = true) 
     {
         $this->hydrator = $hydrator;
+        $this->minimum = $minimum;
     }
 
     /**
@@ -37,7 +45,7 @@ final class NewClassStrategy implements StrategyInterface
     public function extract($value, ?object $object = null)
     {
         if(is_array($value)) return $value;
-        if($value instanceof BaseEntity){
+        if($value instanceof BaseEntity && $this->minimum){
             return [
                 "id" => $value->getId(),
                 "class" => $value->getClass(),
@@ -58,9 +66,11 @@ final class NewClassStrategy implements StrategyInterface
      */
     public function hydrate($value,?array $data)
     {
+        if(empty($value)) return;
         $extract = $this->extract($value);
-        $class = @$extract["class"];
+        $class = isset($extract["class"]) ? $extract["class"] : @$extract["__class"];
         if($class === null) $class = Entity::class;
+        if(isset($value["iterator_class"])) $class = EntityStorage::class;
         if ($value === '' || $value === null || !class_exists($class)) {
             return $value;
         }

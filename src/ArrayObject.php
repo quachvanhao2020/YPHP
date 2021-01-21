@@ -133,4 +133,15 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
         return $this;
     }
 
+    /**
+     * Appends the value
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function prepend($value)
+    {
+        array_unshift($this->storage,$value);
+    }
+
 }

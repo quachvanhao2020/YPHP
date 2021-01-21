@@ -1,6 +1,7 @@
 <?php
 namespace YPHP\Model\Stream;
 use Doctrine\ORM\Mapping as ORM;
+use YPHP\Model\Stream\Storage\ImageStorage;
 
 /** 
  * @ORM\Entity 
@@ -13,6 +14,7 @@ class Image extends EntityStream{
     const WIDTH = "width";
     const HEIGHT = "height";
     const THUMB = "thumb";
+    const RELATES = "relates";
 
     /**
      * @ORM\ManyToOne(targetEntity="YPHP\Model\Stream\Image", inversedBy="children",cascade={"persist"})
@@ -27,6 +29,7 @@ class Image extends EntityStream{
             self::WIDTH => $this->getWidth(),
             self::HEIGHT => $this->getHeight(),
             self::THUMB => $this->getThumb(),
+            self::RELATES => $this->getRelates(),
         ]);
     }
 
@@ -68,6 +71,11 @@ class Image extends EntityStream{
      * @var int
      */
     protected $height;
+
+        /**
+     * @var ImageStorage
+     */
+    protected $relates;
 
     /**
      * Get the value of src
@@ -190,6 +198,31 @@ class Image extends EntityStream{
     public function setThumb(Image $thumb = null)
     {
         $this->thumb = $thumb;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of relates
+     *
+     * @return  ImageStorage
+     */ 
+    public function getRelates()
+    {
+        if(!$this->relates) $this->relates = new ImageStorage();
+        return $this->relates;
+    }
+
+    /**
+     * Set the value of relates
+     *
+     * @param  ImageStorage  $relates
+     *
+     * @return  self
+     */ 
+    public function setRelates(ImageStorage $relates = null)
+    {
+        $this->relates = $relates;
 
         return $this;
     }
