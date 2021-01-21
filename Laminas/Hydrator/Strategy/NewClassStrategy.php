@@ -44,6 +44,7 @@ final class NewClassStrategy implements StrategyInterface
      */
     public function extract($value, ?object $object = null)
     {
+        if(!isset($value)) return;
         if(is_array($value)) return $value;
         if($value instanceof BaseEntity && $this->minimum){
             return [

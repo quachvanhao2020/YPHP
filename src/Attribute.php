@@ -88,30 +88,6 @@ class Attribute extends EntityFertility{
         return $this;
     }
 
-        /**
-     * Get the value of stringValue
-     *
-     * @return  string
-     */ 
-    public function getStringValue()
-    {
-        if(!$this->stringValue) $this->stringValue = "";
-
-        return $this->stringValue;
-    }
-
-    /**
-     * Set the value of stringValue
-     *
-     * @param  string  $stringValue
-     *
-     * @return  self
-     */ 
-    public function setStringValue(string $stringValue = null)
-    {
-        $this->stringValue = $stringValue;
-        return $this;
-    }
 
     /**
      * Get the value of strategy

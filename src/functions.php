@@ -7,6 +7,35 @@ use YPHP\Mapper;
 use YPHP\SEOEntity;
 use YPHP\EntityFertility;
 use YPHP\Filter\AwareSEOInterface;
+use YPHP\Storage\EntityStorageInterface;
+
+function is_parent_class(string $current,string $parent){
+    $class = class_parents($current);
+    return isset($class[$parent]);
+}
+
+function to_relation_ship(EntityStorageInterface &$storage){
+    $__ = new EntityFertility('__');
+    foreach ($storage as $key => $value) {
+        $parent = $value->getParent();
+        if($parent->getId() == EntityFertility::__ID){
+            $value->setParent(null);
+        }
+        $__->addChildren($value,false);
+    }
+    foreach ($__ as $key => $value) {
+        if(!$value instanceof EntityFertility) continue;
+        $parent = $value->getParent();
+        if($parent instanceof EntityFertility){
+            $parent = $__->find($parent->getId());
+            if($parent){
+                $parent->addChildren($value);
+                unset($__[$key]);
+            }
+        }
+    }
+    return $__->getChildren()[array_key_first($__->getChildren())];
+}
 
 function std($object){
     return $object->__toStd();
@@ -329,7 +358,7 @@ function hydrate(array $data,object $object,\Laminas\Hydrator\HydrationInterface
             $_strategys = [];
             if($strategy = @$strategys[$key]){
                 if($hydration instanceof \Laminas\Hydrator\AbstractHydrator){
-                    $hydration->addStrategy($key,$strategy["strategy"]);
+                    isset($strategy["strategy"]) && $hydration->addStrategy($key,$strategy["strategy"]);
                 }
                 $_strategys = isset($strategy["children"]) ? $strategy["children"] : [];
             }
