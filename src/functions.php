@@ -220,7 +220,7 @@ function array_walk_lazy(&$array,callable $callable,int $level = 0){
         }
         if(is_array($value)){
             $level ++;
-            \array_walk_lazy($value,$callable);
+            \array_walk_lazy($value,$callable,$level);
             $level --;
         }
     }

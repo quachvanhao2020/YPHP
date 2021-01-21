@@ -3,7 +3,7 @@ namespace YPHP;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class BaseEntity implements EntityInterface{
-    const __ID = "-1";
+    const __ID = "_a1";
     const ID = "id";
     const __CLASS = "__class";
 
@@ -23,9 +23,8 @@ abstract class BaseEntity implements EntityInterface{
 
     public function __construct(string $id = null)
     {
-        //if(!$id) $id = self::__ID;
+        if(!$id) $id = self::__ID;
         $this->setId($id);
-        $this->getId();
         $this->class = get_class($this);
     }
 
@@ -36,7 +35,7 @@ abstract class BaseEntity implements EntityInterface{
      */ 
     public function getId()
     {
-        if(!$this->id) $this->id = uniqid();
+        if(!$this->id) $this->id = self::__ID;
         return $this->id;
     }
 
