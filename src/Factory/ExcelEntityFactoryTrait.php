@@ -78,7 +78,7 @@ trait ExcelEntityFactoryTrait{
         $entity = $this->extract($entity);
         $entity = \array_reverse($entity);
         unset($entity[Entity::__CLASS]);
-        unset($entity[EntityFertility::CHILDRENS]);
+        unset($entity[EntityFertility::CHILDREN]);
         unset($entity["iterator"]);
         unset($entity["container"]);
         $entity = \index_value_array($entity,"_");
@@ -135,7 +135,7 @@ trait ExcelEntityFactoryTrait{
                 "recursive" => true,
                 "children" => [],
             ],
-            Product::CHILDRENS => [
+            Product::CHILDREN => [
                 "strategy" => $storage_strategy,
                 "recursive" => true,
                 "children" => [],
