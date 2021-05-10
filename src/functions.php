@@ -18,7 +18,7 @@ function to_relation_ship(EntityStorageInterface &$storage){
     $__ = new EntityFertility('__');
     foreach ($storage as $key => $value) {
         $parent = $value->getParent();
-        if($parent->getId() == EntityFertility::__ID){
+        if($parent && $parent->getId() == EntityFertility::__ID){
             $value->setParent(null);
         }
         $__->addChildren($value,false);
@@ -393,4 +393,33 @@ function hydrator_extract(object $object,\Laminas\Hydrator\ExtractionInterface $
         } 
     }
     return $_object;
+}
+
+function array_column_to_array(array $array = []){
+    $fu = function($array){
+        foreach ($array as $key => $value) {
+            if($value) return true;
+        }
+    };
+    $new_array = [];
+    $column = $array[0];
+    unset($array[0]);
+    foreach ($array as $key => $value) {
+        foreach ($value as $_key => $_value) {
+            $value[$column[$_key]] = $_value;
+            unset($value[$_key]);
+        }
+        if($fu($value)) array_push($new_array,$value);
+    }
+    return $new_array;
+}
+
+function seo_friendly_url($string){
+    $string = str_replace(array('[\', \']'), '', $string);
+    $string = preg_replace('/\[.*\]/U', '', $string);
+    $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $string);
+    $string = htmlentities($string, ENT_COMPAT, 'utf-8');
+    $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $string );
+    $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $string);
+    return strtolower(trim($string, '-'));
 }

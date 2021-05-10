@@ -2,11 +2,42 @@
 namespace Laminas\Hydrator\Strategy\Serializable;
 
 use YPHP\Model\Stream\Image;
+use Laminas\Http\Client;
 
 class StaticServer{
 
-    public function encode($object){
+        /**
+     * @var Client
+     */
+    protected $client;
 
+    public function __construct(Client $client = null)
+    {
+        if(!$client){
+            $client = new Client();
+            $client->setOptions([
+                'maxredirects' => 0,
+                'timeout'      => 10,
+            ]);
+        }
+        $this->client = $client;
+    }
+
+    public function encode($object){
+        $id = "111111";
+        $client = $this->client;
+        $text = $object;
+        $client->setUri(STATIC_SERVER."process.php?command=make_seo");
+        $client->setFileUpload('txt.txt', 'file', $text, 'text/plain');
+        $client->setMethod('POST');
+        $client->setParameterPost(['email' => '111111', 'token' => '111111']);
+        $response = $client->send();
+        if ($response->isSuccess()) {
+            $result = gzdecode($response->getContent());
+            $result = json_decode($result,true);
+            if($result) $id = $result['id'];
+        }
+        return STATIC_SERVER."process.php?id=".$id;
     }
 
     public function decode(string $data){
