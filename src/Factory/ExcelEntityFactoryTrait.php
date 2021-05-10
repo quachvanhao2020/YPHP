@@ -1,6 +1,7 @@
 <?php
 namespace YPHP\Factory;
 
+use Ecomo\Category\Factory\ExcelCategoryFactory;
 use YPHP\Hydrator\ClassMethodsHydrator;
 use VietThuongWb\Model\Storage\ProductStorage;
 use VietThuongWb\Model\Product;
@@ -18,6 +19,7 @@ use YPHP\Entity;
 use YPHP\EntityFertility;
 use YPHP\EntityInterface;
 use Laminas\Hydrator\HydratorInterface;
+use VietThuongWb\Factory\ExcelProductFactory;
 
 trait ExcelEntityFactoryTrait{
     use StorageHydratorTrait;
@@ -42,15 +44,24 @@ trait ExcelEntityFactoryTrait{
      */
     protected $autoSave = true;
 
-    public function __construct(string $fileName = null,bool $autoSave = true)
+        /**
+     * @var array
+     */
+    protected $mexel = [];
+
+    public function __construct(string $fileName = null,bool $autoSave = true,array $mexel = [])
     {
         $this->storage = $this->getStorage();
         $this->hydrator = new ClassMethodsHydrator(false);
         $this->fileName = $fileName;
+        $this->autoSave = $autoSave;
+        $this->mexel = $mexel;
         try {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fileName);
             $sheet = $spreadsheet->getActiveSheet();
             $array = \array_column_to_array($sheet->toArray());
+            $this->mexelMes($array);
+            //if($this instanceof ExcelProductFactory){var_dump($mexel);var_dump($array);}
             $this->_convertArraySheet($array);
             foreach ($array as &$value) {
                 $value = \array_index_value($value,"_");
@@ -62,8 +73,28 @@ trait ExcelEntityFactoryTrait{
             $spreadsheet = new Spreadsheet();
         }
         $this->spreadsheet = $spreadsheet;
-        $this->autoSave = $autoSave;
         $this->storage->indexing();
+    }
+
+    private function mexelMes(array &$data){
+        foreach ($data as $key => &$value) {
+            $this->mexelMe($value);
+        }
+    }
+
+    private function mexelMe(array &$data){
+        foreach ($data as $key => &$value) {
+            foreach ($this->mexel as $k => $v) {
+                if(@$v['name'] == $key){
+                    $data[$k] = $value;
+                    unset($data[$key]);
+                }
+                if(@$v['link']){
+                    $data[$k] = $v['value'];
+                }
+            }
+        }
+        return $data;
     }
 
     protected abstract function _convertArraySheet(array &$array); 
@@ -234,7 +265,7 @@ trait ExcelEntityFactoryTrait{
      *
      * @return  self
      */ 
-    public function setStorage(ProductStorage $storage = null)
+    public function setStorage($storage = null)
     {
         $storage->indexing();
         $this->storage = $storage;
