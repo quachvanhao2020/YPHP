@@ -1,25 +1,19 @@
 <?php
 namespace YPHP\Factory;
 
-use Ecomo\Category\Factory\ExcelCategoryFactory;
 use YPHP\Hydrator\ClassMethodsHydrator;
-use VietThuongWb\Model\Storage\ProductStorage;
-use VietThuongWb\Model\Product;
 use YPHP\FilterInputInterface;
 use YPHP\SortingInputInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use YPHP\StorageHydratorTrait;
-use Laminas\Hydrator\Strategy\DateTimeArrayFormatterStrategy;
-use Laminas\Hydrator\Strategy\EnumStrategy;
-use Laminas\Hydrator\Strategy\NewClassStrategy;
-use Laminas\Hydrator\Strategy\StorageStrategy;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use YPHP\Entity;
 use YPHP\EntityFertility;
 use YPHP\EntityInterface;
 use Laminas\Hydrator\HydratorInterface;
-use VietThuongWb\Factory\ExcelProductFactory;
+use YPHP\Storage\EntityStorageInterface;
+use YPHP\Storage\EntityStorage;
 
 trait ExcelEntityFactoryTrait{
     use StorageHydratorTrait;
@@ -61,7 +55,6 @@ trait ExcelEntityFactoryTrait{
             $sheet = $spreadsheet->getActiveSheet();
             $array = \array_column_to_array($sheet->toArray());
             $this->mexelMes($array);
-            //if($this instanceof ExcelProductFactory){var_dump($mexel);var_dump($array);}
             $this->_convertArraySheet($array);
             foreach ($array as &$value) {
                 $value = \array_index_value($value,"_");
@@ -132,50 +125,7 @@ trait ExcelEntityFactoryTrait{
      */ 
     public static function getStrategys(HydratorInterface $hydrator)
     {
-        $minimum_new_class = new NewClassStrategy($hydrator);
-        $new_class = new NewClassStrategy($hydrator,false);
-        $storage_strategy = new StorageStrategy();
         return [
-            Product::STATUS => [
-                "strategy" => new EnumStrategy(),
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::ATTRIBUTES => [
-                "strategy" => $storage_strategy,
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::VARIANTS => [
-                "strategy" => $storage_strategy,
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::DATECREATED => [
-                "strategy" => new DateTimeArrayFormatterStrategy(),
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::CATEGORY => [
-                "strategy" => $minimum_new_class,
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::LOGO => [
-                "strategy" => $new_class,
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::CHILDREN => [
-                "strategy" => $storage_strategy,
-                "recursive" => true,
-                "children" => [],
-            ],
-            Product::PARENT => [
-                "strategy" => $minimum_new_class,
-                "recursive" => true,
-                "children" => [],
-            ],
         ];
     }
 
@@ -261,15 +211,14 @@ trait ExcelEntityFactoryTrait{
     /**
      * Set the value of storage
      *
-     * @param  ProductStorage  $storage
+     * @param  EntityStorage  $storage
      *
      * @return  self
      */ 
-    public function setStorage($storage = null)
+    public function setStorage(EntityStorage $storage = null)
     {
         $storage->indexing();
         $this->storage = $storage;
-
         return $this;
     }
 }
