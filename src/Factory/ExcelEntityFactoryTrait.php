@@ -108,6 +108,12 @@ trait ExcelEntityFactoryTrait{
         $entity = \index_value_array($entity,"_");
         $i = "A";
         foreach ($entity as $key => $value) {
+            if(!empty($this->mexel)){
+                if(isset($this->mexel[$key])){
+                    $key = @$this->mexel[$key]['name'];
+                }else continue;
+                if(!$key) continue;
+            }
             $coll = "{$i}{$index}";
             if($index == 1){
                 $sheet->setCellValue($coll,$key);

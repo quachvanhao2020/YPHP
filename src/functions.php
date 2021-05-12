@@ -8,6 +8,30 @@ use YPHP\SEOEntity;
 use YPHP\EntityFertility;
 use YPHP\Filter\AwareSEOInterface;
 use YPHP\Storage\EntityStorageInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\Event;
+
+function attach_event($eventName, callable $listener, $priority = 1){
+    return get_event_manager()->attach($eventName,$listener,$priority);
+}
+
+function trigger_event($event, $target = null, $argv = []){
+    if($event instanceof Event){
+        return get_event_manager()->triggerEvent($event);
+    }
+    return get_event_manager()->trigger($event,$target,$argv);
+}
+
+/**
+ * @return EventManager
+ */
+function get_event_manager(){
+    global $GLOBALS;
+    if(!isset($GLOBALS['EVENTS'])){
+        $GLOBALS['EVENTS'] = new EventManager();
+    };
+    return $GLOBALS['EVENTS'];
+}
 
 function is_parent_class(string $current,string $parent){
     $class = class_parents($current);

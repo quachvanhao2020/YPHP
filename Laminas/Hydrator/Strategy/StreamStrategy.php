@@ -4,9 +4,6 @@ namespace Laminas\Hydrator\Strategy;
 use Laminas\Cache\Storage\Adapter\Filesystem;
 use YPHP\Model\Stream\EntityStream;
 use YPHP\Stream;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\HttpClient\HttpClient;
-use Laminas\Uri\Uri;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Hydrator\Strategy\Serializable\StaticServer;
 
@@ -19,17 +16,12 @@ final class StreamStrategy implements StrategyInterface
      */
     protected $serialize;
 
-        /**
-     * @var HttpClientInterface
-     */
-    protected $client;
-
     /**
      * @var StorageInterface
      */
     protected $cache;
 
-    public function __construct($serialize = null,HttpClientInterface $client = null,StorageInterface $cache = null)
+    public function __construct($serialize = null,StorageInterface $cache = null)
     {
         if(!$cache){
             $cache = new Filesystem([
@@ -44,8 +36,6 @@ final class StreamStrategy implements StrategyInterface
         }
         if(!$serialize) $serialize = new StaticServer;
         $this->serialize = $serialize;
-        if(!$client) $client = HttpClient::create();
-        $this->client = $client;
         $this->cache = $cache;
     }
 
@@ -63,6 +53,9 @@ final class StreamStrategy implements StrategyInterface
     {
         if($value instanceof EntityStream) {
             return (string)$value->getStream();
+        }
+        if(is_string($value)){
+            $value = $this->serialize->encode($value);
         }
         return $value;
     }
@@ -99,20 +92,7 @@ final class StreamStrategy implements StrategyInterface
             if(file_exists($value)){
                 $result = \file_get_contents($value);
             }else{
-                $uri = new Uri($value);
-                if($uri->isValid()){
-                    $result = $this->client->request("GET",(string)$uri,[
-                        'verify_host' => false,
-                        'verify_peer' => false,
-                        'extra' => [
-                            'curl' => [
-                                //\CURLOPT_SSL_VERIFYPEER => false,
-                                //\CURLOPT_SSL_VERIFYHOST => false,
-                                //CURLOPT_PROXY_SSL_VERIFYPEER => false,
-                            ]
-                        ]
-                    ])->getContent(false);
-                }
+                $result = $value;
             }
             $entity = $this->serialize->decode($result);
         }

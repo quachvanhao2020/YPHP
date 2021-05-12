@@ -3,20 +3,13 @@ declare(strict_types=1);
 
 namespace Laminas\Hydrator\Strategy;
 
-use DateTime;
 use DateTimeInterface;
-use DateTimeZone;
-use YPHP\ArrayObject;
 use YPHP\BaseEntity;
-use YPHP\Enum;
 use YPHP\Storage\EntityStorage;
-use YPHP\StorageInterface;
 
 use function get_class;
 use function gettype;
 use function is_object;
-use function is_string;
-use function preg_replace;
 use function sprintf;
 
 final class StorageStrategy implements StrategyInterface
@@ -46,7 +39,13 @@ final class StorageStrategy implements StrategyInterface
         if ($value instanceof EntityStorage) {
             $ids = [];
             foreach ($value as $key => $value) {
-                if($value instanceof BaseEntity) $ids[] = $value->getId();
+                if($value instanceof BaseEntity) {
+                    if($this->innerStrategy){
+                        $ids[] = $this->innerStrategy->extract($value);
+                    }else{
+                        $ids[] = $value->getId();
+                    }
+                };
             }
             $value = [
                 "ids" => implode(",",$ids),

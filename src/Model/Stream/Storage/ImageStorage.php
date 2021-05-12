@@ -1,12 +1,12 @@
 <?php
 namespace YPHP\Model\Stream\Storage;
 
-use YPHP\ArrayObject;
 use YPHP\Model\Stream\Image;
 use YPHP\Model\Stream\Storage\Iterator\ImageIterator;
+use YPHP\Storage\EntityStorage;
 
-class ImageStorage extends ArrayObject{
-
+class ImageStorage extends EntityStorage{
+    const ENTITY = Image::class;
             /**
      * Create a new iterator from an ArrayObject instance
      *

@@ -1,13 +1,13 @@
 <?php
 namespace YPHP\Model\Stream\Storage;
 
-use YPHP\ArrayObject;
 use YPHP\Model\Stream\Video;
 use YPHP\Model\Stream\Storage\Iterator\VideoIterator;
+use YPHP\Storage\EntityStorage;
 
-class VideoStorage extends ArrayObject{
-
-            /**
+class VideoStorage extends EntityStorage{
+    const ENTITY = Video::class;
+    /**
      * Create a new iterator from an ArrayObject instance
      *
      * @return VideoIterator
