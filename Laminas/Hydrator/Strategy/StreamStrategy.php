@@ -25,6 +25,7 @@ final class StreamStrategy implements StrategyInterface
     {
         if(!$cache){
             $cache = new Filesystem([
+                "cache_dir" => __CACHE__,
                 "key_pattern" => "",
                 "dir_level"=>0,
                 "suffix"=>"json",

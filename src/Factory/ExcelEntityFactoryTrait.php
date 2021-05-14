@@ -106,14 +106,9 @@ trait ExcelEntityFactoryTrait{
         unset($entity["iterator"]);
         unset($entity["container"]);
         $entity = \index_value_array($entity,"_");
+        $entity = $this->mergeMexel($entity);
         $i = "A";
         foreach ($entity as $key => $value) {
-            if(!empty($this->mexel)){
-                if(isset($this->mexel[$key])){
-                    $key = @$this->mexel[$key]['name'];
-                }else continue;
-                if(!$key) continue;
-            }
             $coll = "{$i}{$index}";
             if($index == 1){
                 $sheet->setCellValue($coll,$key);
@@ -122,6 +117,17 @@ trait ExcelEntityFactoryTrait{
             }
             $i ++;
         }
+    }
+
+    public function mergeMexel($array){
+        $result = [];
+        if(empty($this->mexel)) return $array;
+        foreach ($this->mexel as $key => $value) {
+            if($name = @$value['name']){
+                $result[$name] = @$array[$key];
+            }
+        }
+        return $result;
     }
 
     /**
@@ -140,7 +146,7 @@ trait ExcelEntityFactoryTrait{
         if($this->autoSave) $this->save();
     }
 
-    protected function save(){
+    public function save(){
         $storage = $this->storage;
         $storage->prepend($this->getNewEntity());
         $current = 1;

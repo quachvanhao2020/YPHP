@@ -9,6 +9,9 @@ use YPHP\Stream;
 
 class StaticServer{
 
+    //const FAKE_ID = "FAKE_ID";
+    const FAKE_ID = "111111";
+
     /**
      * @var Client
      */
@@ -70,7 +73,7 @@ class StaticServer{
             }
         }
         if(empty($content)) return;
-        $id = "111111";
+        $id = self::FAKE_ID;
         $client = $this->client;
         $client->setUri(STATIC_SERVER."process.php?command=make_seo");
         $client->setFileUpload($name, 'file', $content, $type);
@@ -87,17 +90,18 @@ class StaticServer{
 
     public function decode($data){
         $uri = new Uri($data);
-        if($uri->isValid()){
+        if($uri->getHost()){
             $data = $this->read($data);
         }else{
             if($this->onlyId){
+                if($data == self::FAKE_ID) return;
                 $data = $this->read(STATIC_SERVER."process.php?id=".$data);
             }
         }
         if($data){
             $file = $data["file"];
             $type = $file['type'];
-            if($type == "text/html"){
+            if($type == "text/html" || $type == "text/plain"){
                 return \file_get_contents($file['url']);
             }
             $image = $this->fileDataToImage($file);
