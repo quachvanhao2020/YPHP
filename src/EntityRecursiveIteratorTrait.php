@@ -159,7 +159,7 @@ trait EntityRecursiveIteratorTrait{
      */
     public function hasChildren()
     {
-        return $this->valid() && $this->current()->children;
+        return $this->valid() && @$this->current()->children;
     }
 
     /**

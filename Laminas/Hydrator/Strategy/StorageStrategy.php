@@ -46,6 +46,9 @@ final class StorageStrategy implements StrategyInterface
                         $ids[] = $value->getId();
                     }
                 };
+                if(is_string($value)){
+                    $ids[] = $value;
+                }
             }
             $value = [
                 "ids" => implode(",",$ids),

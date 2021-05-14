@@ -101,7 +101,7 @@ class ArrayObject extends BaseArrayObject implements SerializableInterface {
     }
 
     public function merge(self $storage){
-       return $this->setStorage(array_merge_recursive($storage->getStorage(),$this->getStorage()));
+       return $this->setStorage(array_merge($storage->getStorage(),$this->getStorage()));
     }
 
     public function clear(){
