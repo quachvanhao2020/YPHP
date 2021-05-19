@@ -12,12 +12,13 @@ use YPHP\Entity;
 use YPHP\EntityFertility;
 use YPHP\EntityInterface;
 use Laminas\Hydrator\HydratorInterface;
+use YPHP\EventManagerInject;
 use YPHP\Storage\EntityStorageInterface;
 use YPHP\Storage\EntityStorage;
 
 trait ExcelEntityFactoryTrait{
     use StorageHydratorTrait;
-
+    use EventManagerInject;
     /**
      * @var ProductStorage
      */
@@ -156,6 +157,7 @@ trait ExcelEntityFactoryTrait{
         }
         $writer = new Xlsx($this->spreadsheet);
         $writer->save($this->fileName);
+        $this->trigger('save');
     }
 
     /**

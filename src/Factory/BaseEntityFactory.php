@@ -6,11 +6,13 @@ use YPHP\FilterInputInterface;
 use YPHP\SortingInputInterface;
 use YPHP\EntityInterface;
 use YPHP\Entity;
+use YPHP\EventManagerInject;
 use YPHP\Storage\EntityStorage;
 
 abstract class BaseEntityFactory implements ContainerFactoryInterface{
     use CacheInject;
-
+    use EventManagerInject;
+    
     const ENTITY = Entity::class;
     const STORAGE = EntityStorage::class;
     /**
